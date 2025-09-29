@@ -1,0 +1,256 @@
+2024-12-04 09:06:51,032 - INFO - * Bandas en uso: 3
+2024-12-04 09:06:51,648 - INFO - * Train set size: 118316
+2024-12-04 09:06:51,648 - INFO - * Validation set size: 14789
+2024-12-04 09:06:51,648 - INFO - * Test set size: 14791
+2024-12-04 09:06:51,649 - INFO - * Number of classes: 24
+2024-12-04 10:06:05,820 - INFO - * Epoch 0, Train loss: 2.3769, Acc: 0.2678, Val. loss: 2.1986, Acc: 0.3185
+2024-12-04 10:06:05,820 - INFO -   saving best model with acc 0.31845302380959367 at 0 epoch!
+2024-12-04 11:05:24,480 - INFO - * Epoch 1, Train loss: 2.1005, Acc: 0.3530, Val. loss: 1.9694, Acc: 0.3892
+2024-12-04 11:05:24,480 - INFO -   saving best model with acc 0.38922786178393187 at 1 epoch!
+2024-12-04 12:04:48,329 - INFO - * Epoch 2, Train loss: 1.8727, Acc: 0.4169, Val. loss: 1.7202, Acc: 0.4561
+2024-12-04 12:04:48,329 - INFO -   saving best model with acc 0.4560610151187905 at 2 epoch!
+2024-12-04 13:04:12,345 - INFO - * Epoch 3, Train loss: 1.6397, Acc: 0.4824, Val. loss: 1.5523, Acc: 0.5044
+2024-12-04 13:04:12,345 - INFO -   saving best model with acc 0.5044006479996584 at 3 epoch!
+2024-12-04 14:03:36,620 - INFO - * Epoch 4, Train loss: 1.4688, Acc: 0.5342, Val. loss: 1.3870, Acc: 0.5519
+2024-12-04 14:03:36,621 - INFO -   saving best model with acc 0.5518898488249686 at 4 epoch!
+2024-12-04 15:02:57,928 - INFO - * Epoch 5, Train loss: 1.3283, Acc: 0.5765, Val. loss: 1.2801, Acc: 0.5915
+2024-12-04 15:02:57,929 - INFO -   saving best model with acc 0.5914821814319228 at 5 epoch!
+2024-12-04 16:02:14,470 - INFO - * Epoch 6, Train loss: 1.2000, Acc: 0.6140, Val. loss: 1.1469, Acc: 0.6307
+2024-12-04 16:02:14,471 - INFO -   saving best model with acc 0.630737041036717 at 6 epoch!
+2024-12-04 17:01:37,631 - INFO - * Epoch 7, Train loss: 1.0831, Acc: 0.6495, Val. loss: 1.0572, Acc: 0.6553
+2024-12-04 17:01:37,631 - INFO -   saving best model with acc 0.6552510799651012 at 7 epoch!
+2024-12-04 18:01:01,912 - INFO - * Epoch 8, Train loss: 0.9854, Acc: 0.6798, Val. loss: 0.9580, Acc: 0.6807
+2024-12-04 18:01:01,912 - INFO -   saving best model with acc 0.6806560475419459 at 8 epoch!
+2024-12-04 19:00:20,949 - INFO - * Epoch 9, Train loss: 0.8995, Acc: 0.7040, Val. loss: 0.9116, Acc: 0.6971
+2024-12-04 19:00:20,949 - INFO -   saving best model with acc 0.6971247300473454 at 9 epoch!
+2024-12-04 19:59:40,378 - INFO - * Epoch 10, Train loss: 0.8260, Acc: 0.7257, Val. loss: 0.8861, Acc: 0.7061
+2024-12-04 19:59:40,379 - INFO -   saving best model with acc 0.7061420086908031 at 10 epoch!
+2024-12-04 20:59:00,931 - INFO - * Epoch 11, Train loss: 0.7636, Acc: 0.7453, Val. loss: 0.8769, Acc: 0.7091
+2024-12-04 20:59:00,931 - INFO -   saving best model with acc 0.7091387689242352 at 11 epoch!
+2024-12-04 21:58:19,229 - INFO - * Epoch 12, Train loss: 0.7093, Acc: 0.7612, Val. loss: 0.7914, Acc: 0.7376
+2024-12-04 21:58:19,229 - INFO -   saving best model with acc 0.7376214903065247 at 12 epoch!
+2024-12-04 22:57:39,912 - INFO - * Epoch 13, Train loss: 0.6608, Acc: 0.7765, Val. loss: 0.7798, Acc: 0.7400
+2024-12-04 22:57:39,913 - INFO -   saving best model with acc 0.7400242981076498 at 13 epoch!
+2024-12-04 23:57:00,816 - INFO - * Epoch 14, Train loss: 0.6197, Acc: 0.7900, Val. loss: 0.7934, Acc: 0.7395
+2024-12-05 00:56:22,892 - INFO - * Epoch 15, Train loss: 0.5796, Acc: 0.8022, Val. loss: 0.7548, Acc: 0.7541
+2024-12-05 00:56:22,892 - INFO -   saving best model with acc 0.7540631749974986 at 15 epoch!
+2024-12-05 01:55:50,799 - INFO - * Epoch 16, Train loss: 0.5389, Acc: 0.8152, Val. loss: 0.7616, Acc: 0.7539
+2024-12-05 02:55:15,428 - INFO - * Epoch 17, Train loss: 0.5028, Acc: 0.8265, Val. loss: 0.7604, Acc: 0.7558
+2024-12-05 02:55:15,429 - INFO -   saving best model with acc 0.7558180346087298 at 17 epoch!
+2024-12-05 03:54:40,287 - INFO - * Epoch 18, Train loss: 0.4671, Acc: 0.8393, Val. loss: 0.7680, Acc: 0.7548
+2024-12-05 04:54:02,539 - INFO - * Epoch 19, Train loss: 0.4369, Acc: 0.8476, Val. loss: 0.7634, Acc: 0.7560
+2024-12-05 04:54:02,540 - INFO -   saving best model with acc 0.756007019438445 at 19 epoch!
+2024-12-05 05:53:23,319 - INFO - * Epoch 20, Train loss: 0.4076, Acc: 0.8591, Val. loss: 0.7519, Acc: 0.7641
+2024-12-05 05:53:23,319 - INFO -   saving best model with acc 0.7641198704618615 at 20 epoch!
+2024-12-05 06:52:48,587 - INFO - * Epoch 21, Train loss: 0.3770, Acc: 0.8690, Val. loss: 0.7832, Acc: 0.7635
+2024-12-05 07:52:15,674 - INFO - * Epoch 22, Train loss: 0.3518, Acc: 0.8770, Val. loss: 0.8389, Acc: 0.7446
+2024-12-05 08:51:45,420 - INFO - * Epoch 23, Train loss: 0.3295, Acc: 0.8839, Val. loss: 0.8259, Acc: 0.7520
+2024-12-05 09:51:11,798 - INFO - * Epoch 24, Train loss: 0.3117, Acc: 0.8910, Val. loss: 0.8439, Acc: 0.7540
+2024-12-05 10:50:33,199 - INFO - * Epoch 25, Train loss: 0.2949, Acc: 0.8957, Val. loss: 0.8822, Acc: 0.7491
+2024-12-05 11:49:56,239 - INFO - * Epoch 26, Train loss: 0.2806, Acc: 0.9022, Val. loss: 0.8816, Acc: 0.7550
+2024-12-05 12:49:20,597 - INFO - * Epoch 27, Train loss: 0.2717, Acc: 0.9046, Val. loss: 0.9004, Acc: 0.7527
+2024-12-05 13:48:46,069 - INFO - * Epoch 28, Train loss: 0.2582, Acc: 0.9096, Val. loss: 0.8610, Acc: 0.7576
+2024-12-05 14:48:11,477 - INFO - * Epoch 29, Train loss: 0.2480, Acc: 0.9130, Val. loss: 0.9291, Acc: 0.7502
+2024-12-05 15:47:37,201 - INFO - * Epoch 30, Train loss: 0.2440, Acc: 0.9139, Val. loss: 0.9839, Acc: 0.7388
+2024-12-05 16:47:00,660 - INFO - * Epoch 31, Train loss: 0.2376, Acc: 0.9165, Val. loss: 0.8983, Acc: 0.7572
+2024-12-05 17:46:23,903 - INFO - * Epoch 32, Train loss: 0.2335, Acc: 0.9174, Val. loss: 0.9339, Acc: 0.7507
+2024-12-05 18:45:48,298 - INFO - * Epoch 33, Train loss: 0.2312, Acc: 0.9185, Val. loss: 0.9373, Acc: 0.7467
+2024-12-05 19:45:14,323 - INFO - * Epoch 34, Train loss: 0.2293, Acc: 0.9186, Val. loss: 0.9682, Acc: 0.7465
+2024-12-05 20:44:40,429 - INFO - * Epoch 35, Train loss: 0.2246, Acc: 0.9209, Val. loss: 0.9357, Acc: 0.7532
+2024-12-05 21:44:07,726 - INFO - * Epoch 36, Train loss: 0.2241, Acc: 0.9215, Val. loss: 0.9347, Acc: 0.7531
+2024-12-05 22:43:34,834 - INFO - * Epoch 37, Train loss: 0.2181, Acc: 0.9232, Val. loss: 0.9336, Acc: 0.7573
+2024-12-05 23:43:00,187 - INFO - * Epoch 38, Train loss: 0.2221, Acc: 0.9214, Val. loss: 0.9088, Acc: 0.7544
+2024-12-06 00:42:25,428 - INFO - * Epoch 39, Train loss: 0.2180, Acc: 0.9229, Val. loss: 0.9372, Acc: 0.7516
+2024-12-06 01:41:50,613 - INFO - * Epoch 40, Train loss: 0.2201, Acc: 0.9233, Val. loss: 0.9517, Acc: 0.7494
+2024-12-06 02:41:14,897 - INFO - * Epoch 41, Train loss: 0.2180, Acc: 0.9234, Val. loss: 0.9360, Acc: 0.7570
+2024-12-06 03:40:42,607 - INFO - * Epoch 42, Train loss: 0.2189, Acc: 0.9242, Val. loss: 1.0290, Acc: 0.7331
+2024-12-06 04:40:03,739 - INFO - * Epoch 43, Train loss: 0.2189, Acc: 0.9234, Val. loss: 0.9748, Acc: 0.7459
+2024-12-06 05:39:30,936 - INFO - * Epoch 44, Train loss: 0.2233, Acc: 0.9220, Val. loss: 0.9855, Acc: 0.7439
+2024-12-06 06:38:55,365 - INFO - * Epoch 45, Train loss: 0.2208, Acc: 0.9225, Val. loss: 0.9036, Acc: 0.7547
+2024-12-06 07:38:21,871 - INFO - * Epoch 46, Train loss: 0.2230, Acc: 0.9233, Val. loss: 0.9178, Acc: 0.7518
+2024-12-06 08:37:48,379 - INFO - * Epoch 47, Train loss: 0.2231, Acc: 0.9216, Val. loss: 0.8970, Acc: 0.7586
+2024-12-06 09:37:14,843 - INFO - * Epoch 48, Train loss: 0.2275, Acc: 0.9210, Val. loss: 0.8989, Acc: 0.7601
+2024-12-06 10:36:40,688 - INFO - * Epoch 49, Train loss: 0.2272, Acc: 0.9202, Val. loss: 0.8636, Acc: 0.7688
+2024-12-06 10:36:40,688 - INFO -   saving best model with acc 0.7688039957060927 at 49 epoch!
+2024-12-06 11:36:08,040 - INFO - * Epoch 50, Train loss: 0.2327, Acc: 0.9181, Val. loss: 0.9063, Acc: 0.7504
+2024-12-06 12:35:33,812 - INFO - * Epoch 51, Train loss: 0.2363, Acc: 0.9177, Val. loss: 0.9107, Acc: 0.7553
+2024-12-06 13:34:57,918 - INFO - * Epoch 52, Train loss: 0.2365, Acc: 0.9172, Val. loss: 0.8291, Acc: 0.7723
+2024-12-06 13:34:57,918 - INFO -   saving best model with acc 0.7722867171141293 at 52 epoch!
+2024-12-06 14:34:24,799 - INFO - * Epoch 53, Train loss: 0.2383, Acc: 0.9176, Val. loss: 0.9532, Acc: 0.7497
+2024-12-06 15:33:51,535 - INFO - * Epoch 54, Train loss: 0.2418, Acc: 0.9153, Val. loss: 0.8472, Acc: 0.7666
+2024-12-06 16:33:19,817 - INFO - * Epoch 55, Train loss: 0.2455, Acc: 0.9137, Val. loss: 0.8409, Acc: 0.7669
+2024-12-06 17:32:46,473 - INFO - * Epoch 56, Train loss: 0.2461, Acc: 0.9143, Val. loss: 0.8782, Acc: 0.7597
+2024-12-06 18:32:11,387 - INFO - * Epoch 57, Train loss: 0.2491, Acc: 0.9133, Val. loss: 0.8292, Acc: 0.7700
+2024-12-06 19:31:37,203 - INFO - * Epoch 58, Train loss: 0.2559, Acc: 0.9116, Val. loss: 0.8586, Acc: 0.7581
+2024-12-06 20:31:06,126 - INFO - * Epoch 59, Train loss: 0.2538, Acc: 0.9116, Val. loss: 0.9586, Acc: 0.7410
+2024-12-06 21:30:35,715 - INFO - * Epoch 60, Train loss: 0.2591, Acc: 0.9103, Val. loss: 0.8512, Acc: 0.7583
+2024-12-06 22:30:04,686 - INFO - * Epoch 61, Train loss: 0.2604, Acc: 0.9096, Val. loss: 0.8434, Acc: 0.7642
+2024-12-06 23:29:33,595 - INFO - * Epoch 62, Train loss: 0.2648, Acc: 0.9085, Val. loss: 0.7809, Acc: 0.7752
+2024-12-06 23:29:33,596 - INFO -   saving best model with acc 0.7751889849327038 at 62 epoch!
+2024-12-07 00:28:57,392 - INFO - * Epoch 63, Train loss: 0.2693, Acc: 0.9068, Val. loss: 0.8409, Acc: 0.7624
+2024-12-07 01:28:18,792 - INFO - * Epoch 64, Train loss: 0.2692, Acc: 0.9057, Val. loss: 0.8330, Acc: 0.7642
+2024-12-07 02:27:42,599 - INFO - * Epoch 65, Train loss: 0.2733, Acc: 0.9054, Val. loss: 0.8216, Acc: 0.7666
+2024-12-07 03:27:06,343 - INFO - * Epoch 66, Train loss: 0.2742, Acc: 0.9044, Val. loss: 0.7995, Acc: 0.7720
+2024-12-07 04:26:32,352 - INFO - * Epoch 67, Train loss: 0.2766, Acc: 0.9046, Val. loss: 0.8292, Acc: 0.7648
+2024-12-07 05:25:59,317 - INFO - * Epoch 68, Train loss: 0.2796, Acc: 0.9028, Val. loss: 0.7905, Acc: 0.7765
+2024-12-07 05:25:59,318 - INFO -   saving best model with acc 0.7764713823409112 at 68 epoch!
+2024-12-07 06:25:22,771 - INFO - * Epoch 69, Train loss: 0.2794, Acc: 0.9024, Val. loss: 0.8022, Acc: 0.7692
+2024-12-07 07:24:50,688 - INFO - * Epoch 70, Train loss: 0.2820, Acc: 0.9017, Val. loss: 0.7669, Acc: 0.7776
+2024-12-07 07:24:50,688 - INFO -   saving best model with acc 0.7776457883626802 at 70 epoch!
+2024-12-07 08:24:15,143 - INFO - * Epoch 71, Train loss: 0.2820, Acc: 0.9012, Val. loss: 0.7988, Acc: 0.7702
+2024-12-07 09:23:41,482 - INFO - * Epoch 72, Train loss: 0.2819, Acc: 0.9026, Val. loss: 0.7565, Acc: 0.7819
+2024-12-07 09:23:41,483 - INFO -   saving best model with acc 0.7818574514038877 at 72 epoch!
+2024-12-07 10:23:06,641 - INFO - * Epoch 73, Train loss: 0.2870, Acc: 0.9007, Val. loss: 0.7841, Acc: 0.7668
+2024-12-07 11:22:33,014 - INFO - * Epoch 74, Train loss: 0.2837, Acc: 0.9020, Val. loss: 0.7624, Acc: 0.7784
+2024-12-07 12:21:58,812 - INFO - * Epoch 75, Train loss: 0.2854, Acc: 0.9008, Val. loss: 0.7543, Acc: 0.7804
+2024-12-07 13:21:25,018 - INFO - * Epoch 76, Train loss: 0.2864, Acc: 0.8999, Val. loss: 0.7504, Acc: 0.7737
+2024-12-07 14:20:48,700 - INFO - * Epoch 77, Train loss: 0.2857, Acc: 0.9012, Val. loss: 0.7530, Acc: 0.7776
+2024-12-07 15:20:12,579 - INFO - * Epoch 78, Train loss: 0.2881, Acc: 0.8999, Val. loss: 0.7367, Acc: 0.7780
+2024-12-07 16:19:39,333 - INFO - * Epoch 79, Train loss: 0.2910, Acc: 0.8991, Val. loss: 0.7270, Acc: 0.7838
+2024-12-07 16:19:39,333 - INFO -   saving best model with acc 0.7837607991875634 at 79 epoch!
+2024-12-07 17:19:05,184 - INFO - * Epoch 80, Train loss: 0.2909, Acc: 0.8986, Val. loss: 0.7594, Acc: 0.7758
+2024-12-07 18:18:31,478 - INFO - * Epoch 81, Train loss: 0.2950, Acc: 0.8976, Val. loss: 0.7712, Acc: 0.7717
+2024-12-07 19:18:00,229 - INFO - * Epoch 82, Train loss: 0.2954, Acc: 0.8982, Val. loss: 0.6923, Acc: 0.7932
+2024-12-07 19:18:00,230 - INFO -   saving best model with acc 0.7931965442764579 at 82 epoch!
+2024-12-07 20:17:26,387 - INFO - * Epoch 83, Train loss: 0.2927, Acc: 0.8987, Val. loss: 0.6878, Acc: 0.7956
+2024-12-07 20:17:26,387 - INFO -   saving best model with acc 0.7955588552915767 at 83 epoch!
+2024-12-07 21:16:52,267 - INFO - * Epoch 84, Train loss: 0.2961, Acc: 0.8971, Val. loss: 0.7198, Acc: 0.7856
+2024-12-07 22:16:20,590 - INFO - * Epoch 85, Train loss: 0.2958, Acc: 0.8981, Val. loss: 0.7116, Acc: 0.7841
+2024-12-07 23:15:46,778 - INFO - * Epoch 86, Train loss: 0.2978, Acc: 0.8976, Val. loss: 0.6974, Acc: 0.7920
+2024-12-08 00:15:12,192 - INFO - * Epoch 87, Train loss: 0.2957, Acc: 0.8974, Val. loss: 0.7217, Acc: 0.7800
+2024-12-08 01:14:38,805 - INFO - * Epoch 88, Train loss: 0.3001, Acc: 0.8958, Val. loss: 0.7191, Acc: 0.7859
+2024-12-08 02:14:05,551 - INFO - * Epoch 89, Train loss: 0.2989, Acc: 0.8967, Val. loss: 0.7199, Acc: 0.7812
+2024-12-08 03:13:28,402 - INFO - * Epoch 90, Train loss: 0.3015, Acc: 0.8962, Val. loss: 0.6866, Acc: 0.7916
+2024-12-08 04:12:56,492 - INFO - * Epoch 91, Train loss: 0.3024, Acc: 0.8960, Val. loss: 0.7130, Acc: 0.7884
+2024-12-08 05:12:26,262 - INFO - * Epoch 92, Train loss: 0.3036, Acc: 0.8958, Val. loss: 0.7009, Acc: 0.7882
+2024-12-08 06:11:53,884 - INFO - * Epoch 93, Train loss: 0.3048, Acc: 0.8947, Val. loss: 0.6780, Acc: 0.7916
+2024-12-08 07:11:18,753 - INFO - * Epoch 94, Train loss: 0.3033, Acc: 0.8949, Val. loss: 0.6998, Acc: 0.7906
+2024-12-08 08:10:42,215 - INFO - * Epoch 95, Train loss: 0.3076, Acc: 0.8942, Val. loss: 0.7021, Acc: 0.7903
+2024-12-08 09:10:06,142 - INFO - * Epoch 96, Train loss: 0.3077, Acc: 0.8939, Val. loss: 0.6979, Acc: 0.7827
+2024-12-08 10:09:33,384 - INFO - * Epoch 97, Train loss: 0.3078, Acc: 0.8945, Val. loss: 0.7020, Acc: 0.7824
+2024-12-08 11:08:57,902 - INFO - * Epoch 98, Train loss: 0.3078, Acc: 0.8927, Val. loss: 0.6847, Acc: 0.7932
+2024-12-08 12:08:25,610 - INFO - * Epoch 99, Train loss: 0.3139, Acc: 0.8924, Val. loss: 0.6859, Acc: 0.7903
+2024-12-08 13:07:55,784 - INFO - * Epoch 100, Train loss: 0.3114, Acc: 0.8916, Val. loss: 0.6944, Acc: 0.7907
+2024-12-08 14:07:21,307 - INFO - * Epoch 101, Train loss: 0.3125, Acc: 0.8922, Val. loss: 0.7177, Acc: 0.7889
+2024-12-08 15:06:45,274 - INFO - * Epoch 102, Train loss: 0.3132, Acc: 0.8929, Val. loss: 0.7292, Acc: 0.7825
+2024-12-08 16:06:10,725 - INFO - * Epoch 103, Train loss: 0.3173, Acc: 0.8904, Val. loss: 0.6951, Acc: 0.7896
+2024-12-08 17:05:37,697 - INFO - * Epoch 104, Train loss: 0.3172, Acc: 0.8913, Val. loss: 0.6559, Acc: 0.8015
+2024-12-08 17:05:37,698 - INFO -   saving best model with acc 0.801471382315164 at 104 epoch!
+2024-12-08 18:05:07,678 - INFO - * Epoch 105, Train loss: 0.3211, Acc: 0.8898, Val. loss: 0.6830, Acc: 0.7849
+2024-12-08 19:04:33,658 - INFO - * Epoch 106, Train loss: 0.3205, Acc: 0.8894, Val. loss: 0.6687, Acc: 0.7933
+2024-12-08 20:03:58,921 - INFO - * Epoch 107, Train loss: 0.3220, Acc: 0.8887, Val. loss: 0.6670, Acc: 0.7928
+2024-12-08 21:03:25,236 - INFO - * Epoch 108, Train loss: 0.3217, Acc: 0.8892, Val. loss: 0.6769, Acc: 0.7958
+2024-12-08 22:02:48,422 - INFO - * Epoch 109, Train loss: 0.3230, Acc: 0.8882, Val. loss: 0.6869, Acc: 0.7866
+2024-12-08 23:02:11,445 - INFO - * Epoch 110, Train loss: 0.3258, Acc: 0.8874, Val. loss: 0.7002, Acc: 0.7776
+2024-12-09 00:01:39,703 - INFO - * Epoch 111, Train loss: 0.3256, Acc: 0.8882, Val. loss: 0.6328, Acc: 0.7995
+2024-12-09 01:01:04,213 - INFO - * Epoch 112, Train loss: 0.3277, Acc: 0.8866, Val. loss: 0.7144, Acc: 0.7781
+2024-12-09 02:00:33,111 - INFO - * Epoch 113, Train loss: 0.3285, Acc: 0.8869, Val. loss: 0.6705, Acc: 0.7922
+2024-12-09 03:00:00,542 - INFO - * Epoch 114, Train loss: 0.3327, Acc: 0.8855, Val. loss: 0.6729, Acc: 0.7920
+2024-12-09 03:59:28,499 - INFO - * Epoch 115, Train loss: 0.3321, Acc: 0.8859, Val. loss: 0.6883, Acc: 0.7910
+2024-12-09 04:58:55,484 - INFO - * Epoch 116, Train loss: 0.3352, Acc: 0.8837, Val. loss: 0.6558, Acc: 0.7971
+2024-12-09 05:58:20,168 - INFO - * Epoch 117, Train loss: 0.3348, Acc: 0.8856, Val. loss: 0.6616, Acc: 0.7954
+2024-12-09 06:57:46,137 - INFO - * Epoch 118, Train loss: 0.3363, Acc: 0.8840, Val. loss: 0.6448, Acc: 0.7970
+2024-12-09 07:57:14,692 - INFO - * Epoch 119, Train loss: 0.3377, Acc: 0.8832, Val. loss: 0.6690, Acc: 0.7916
+2024-12-09 08:56:45,213 - INFO - * Epoch 120, Train loss: 0.3410, Acc: 0.8830, Val. loss: 0.6939, Acc: 0.7857
+2024-12-09 09:56:11,184 - INFO - * Epoch 121, Train loss: 0.3401, Acc: 0.8833, Val. loss: 0.6526, Acc: 0.7942
+2024-12-09 10:55:41,347 - INFO - * Epoch 122, Train loss: 0.3422, Acc: 0.8819, Val. loss: 0.6523, Acc: 0.8005
+2024-12-09 11:55:09,201 - INFO - * Epoch 123, Train loss: 0.3443, Acc: 0.8815, Val. loss: 0.6859, Acc: 0.7862
+2024-12-09 12:54:38,755 - INFO - * Epoch 124, Train loss: 0.3457, Acc: 0.8801, Val. loss: 0.6589, Acc: 0.7930
+2024-12-09 13:54:07,973 - INFO - * Epoch 125, Train loss: 0.3466, Acc: 0.8804, Val. loss: 0.6289, Acc: 0.8072
+2024-12-09 13:54:07,973 - INFO -   saving best model with acc 0.8071679265658748 at 125 epoch!
+2024-12-09 14:53:35,430 - INFO - * Epoch 126, Train loss: 0.3467, Acc: 0.8811, Val. loss: 0.6593, Acc: 0.7965
+2024-12-09 15:53:05,587 - INFO - * Epoch 127, Train loss: 0.3517, Acc: 0.8783, Val. loss: 0.6632, Acc: 0.7937
+2024-12-09 16:52:34,295 - INFO - * Epoch 128, Train loss: 0.3519, Acc: 0.8784, Val. loss: 0.6833, Acc: 0.7885
+2024-12-09 17:52:02,358 - INFO - * Epoch 129, Train loss: 0.3535, Acc: 0.8782, Val. loss: 0.6407, Acc: 0.7986
+2024-12-09 18:51:29,150 - INFO - * Epoch 130, Train loss: 0.3515, Acc: 0.8787, Val. loss: 0.6219, Acc: 0.7967
+2024-12-09 19:50:58,048 - INFO - * Epoch 131, Train loss: 0.3563, Acc: 0.8774, Val. loss: 0.7056, Acc: 0.7849
+2024-12-09 20:50:21,532 - INFO - * Epoch 132, Train loss: 0.3559, Acc: 0.8778, Val. loss: 0.6317, Acc: 0.7985
+2024-12-09 21:49:50,394 - INFO - * Epoch 133, Train loss: 0.3585, Acc: 0.8780, Val. loss: 0.6071, Acc: 0.8039
+2024-12-09 22:49:18,436 - INFO - * Epoch 134, Train loss: 0.3600, Acc: 0.8775, Val. loss: 0.6469, Acc: 0.7888
+2024-12-09 23:48:42,787 - INFO - * Epoch 135, Train loss: 0.3649, Acc: 0.8748, Val. loss: 0.6359, Acc: 0.7939
+2024-12-10 00:48:08,471 - INFO - * Epoch 136, Train loss: 0.3654, Acc: 0.8749, Val. loss: 0.6217, Acc: 0.8038
+2024-12-10 01:47:32,320 - INFO - * Epoch 137, Train loss: 0.3636, Acc: 0.8763, Val. loss: 0.6671, Acc: 0.7915
+2024-12-10 02:46:59,643 - INFO - * Epoch 138, Train loss: 0.3662, Acc: 0.8739, Val. loss: 0.6020, Acc: 0.8074
+2024-12-10 02:46:59,643 - INFO -   saving best model with acc 0.8073839093387513 at 138 epoch!
+2024-12-10 03:46:29,172 - INFO - * Epoch 139, Train loss: 0.3675, Acc: 0.8749, Val. loss: 0.6023, Acc: 0.8064
+2024-12-10 04:45:56,961 - INFO - * Epoch 140, Train loss: 0.3708, Acc: 0.8734, Val. loss: 0.6300, Acc: 0.8021
+2024-12-10 05:45:25,013 - INFO - * Epoch 141, Train loss: 0.3720, Acc: 0.8722, Val. loss: 0.6690, Acc: 0.7863
+2024-12-10 06:44:52,535 - INFO - * Epoch 142, Train loss: 0.3701, Acc: 0.8730, Val. loss: 0.6502, Acc: 0.7922
+2024-12-10 07:44:22,005 - INFO - * Epoch 143, Train loss: 0.3747, Acc: 0.8704, Val. loss: 0.6311, Acc: 0.8023
+2024-12-10 08:43:46,044 - INFO - * Epoch 144, Train loss: 0.3748, Acc: 0.8714, Val. loss: 0.6100, Acc: 0.8033
+2024-12-10 09:43:12,257 - INFO - * Epoch 145, Train loss: 0.3801, Acc: 0.8696, Val. loss: 0.6243, Acc: 0.8010
+2024-12-10 10:42:38,614 - INFO - * Epoch 146, Train loss: 0.3772, Acc: 0.8704, Val. loss: 0.6263, Acc: 0.7987
+2024-12-10 11:42:04,856 - INFO - * Epoch 147, Train loss: 0.3798, Acc: 0.8700, Val. loss: 0.6168, Acc: 0.7979
+2024-12-10 12:41:33,483 - INFO - * Epoch 148, Train loss: 0.3809, Acc: 0.8691, Val. loss: 0.6487, Acc: 0.7963
+2024-12-10 13:41:00,070 - INFO - * Epoch 149, Train loss: 0.3821, Acc: 0.8679, Val. loss: 0.6198, Acc: 0.8014
+2024-12-10 14:40:26,455 - INFO - * Epoch 150, Train loss: 0.3848, Acc: 0.8690, Val. loss: 0.6245, Acc: 0.8011
+2024-12-10 15:39:51,916 - INFO - * Epoch 151, Train loss: 0.3841, Acc: 0.8693, Val. loss: 0.6603, Acc: 0.7926
+2024-12-10 16:39:19,612 - INFO - * Epoch 152, Train loss: 0.3904, Acc: 0.8677, Val. loss: 0.6217, Acc: 0.7994
+2024-12-10 17:38:46,139 - INFO - * Epoch 153, Train loss: 0.3884, Acc: 0.8669, Val. loss: 0.6105, Acc: 0.8015
+2024-12-10 18:38:10,848 - INFO - * Epoch 154, Train loss: 0.3919, Acc: 0.8664, Val. loss: 0.6139, Acc: 0.7996
+2024-12-10 19:37:35,244 - INFO - * Epoch 155, Train loss: 0.3889, Acc: 0.8677, Val. loss: 0.5900, Acc: 0.8067
+2024-12-10 20:37:02,399 - INFO - * Epoch 156, Train loss: 0.3911, Acc: 0.8670, Val. loss: 0.6524, Acc: 0.7888
+2024-12-10 21:36:29,503 - INFO - * Epoch 157, Train loss: 0.3890, Acc: 0.8674, Val. loss: 0.5825, Acc: 0.8125
+2024-12-10 21:36:29,504 - INFO -   saving best model with acc 0.8125404967860064 at 157 epoch!
+2024-12-10 22:35:51,064 - INFO - * Epoch 158, Train loss: 0.3837, Acc: 0.8684, Val. loss: 0.6282, Acc: 0.8028
+2024-12-10 23:35:20,139 - INFO - * Epoch 159, Train loss: 0.3868, Acc: 0.8674, Val. loss: 0.6241, Acc: 0.7990
+2024-12-11 00:34:47,628 - INFO - * Epoch 160, Train loss: 0.3824, Acc: 0.8693, Val. loss: 0.6372, Acc: 0.8005
+2024-12-11 01:34:15,509 - INFO - * Epoch 161, Train loss: 0.3793, Acc: 0.8709, Val. loss: 0.6155, Acc: 0.8060
+2024-12-11 02:33:43,285 - INFO - * Epoch 162, Train loss: 0.3770, Acc: 0.8710, Val. loss: 0.6595, Acc: 0.7870
+2024-12-11 03:33:08,244 - INFO - * Epoch 163, Train loss: 0.3772, Acc: 0.8708, Val. loss: 0.6480, Acc: 0.7942
+2024-12-11 04:32:31,703 - INFO - * Epoch 164, Train loss: 0.3731, Acc: 0.8718, Val. loss: 0.6146, Acc: 0.8024
+2024-12-11 05:31:59,467 - INFO - * Epoch 165, Train loss: 0.3737, Acc: 0.8723, Val. loss: 0.6627, Acc: 0.7887
+2024-12-11 06:31:24,126 - INFO - * Epoch 166, Train loss: 0.3689, Acc: 0.8739, Val. loss: 0.6139, Acc: 0.8056
+2024-12-11 07:30:44,738 - INFO - * Epoch 167, Train loss: 0.3658, Acc: 0.8744, Val. loss: 0.5992, Acc: 0.8053
+2024-12-11 08:30:06,798 - INFO - * Epoch 168, Train loss: 0.3644, Acc: 0.8752, Val. loss: 0.6126, Acc: 0.8087
+2024-12-11 09:29:26,869 - INFO - * Epoch 169, Train loss: 0.3670, Acc: 0.8741, Val. loss: 0.6160, Acc: 0.8037
+2024-12-11 10:28:50,572 - INFO - * Epoch 170, Train loss: 0.3605, Acc: 0.8757, Val. loss: 0.6109, Acc: 0.8028
+2024-12-11 11:28:13,288 - INFO - * Epoch 171, Train loss: 0.3604, Acc: 0.8766, Val. loss: 0.6264, Acc: 0.8008
+2024-12-11 12:27:40,156 - INFO - * Epoch 172, Train loss: 0.3585, Acc: 0.8781, Val. loss: 0.6167, Acc: 0.8002
+2024-12-11 13:27:05,267 - INFO - * Epoch 173, Train loss: 0.3570, Acc: 0.8768, Val. loss: 0.6219, Acc: 0.7983
+2024-12-11 14:26:32,984 - INFO - * Epoch 174, Train loss: 0.3566, Acc: 0.8784, Val. loss: 0.5991, Acc: 0.8088
+2024-12-11 15:25:57,379 - INFO - * Epoch 175, Train loss: 0.3558, Acc: 0.8787, Val. loss: 0.6081, Acc: 0.8077
+2024-12-11 16:25:25,019 - INFO - * Epoch 176, Train loss: 0.3526, Acc: 0.8789, Val. loss: 0.6319, Acc: 0.8005
+2024-12-11 17:24:51,971 - INFO - * Epoch 177, Train loss: 0.3523, Acc: 0.8787, Val. loss: 0.6173, Acc: 0.8016
+2024-12-11 18:24:20,746 - INFO - * Epoch 178, Train loss: 0.3499, Acc: 0.8799, Val. loss: 0.6113, Acc: 0.8075
+2024-12-11 19:23:40,136 - INFO - * Epoch 179, Train loss: 0.3435, Acc: 0.8810, Val. loss: 0.6132, Acc: 0.8026
+2024-12-11 20:23:03,597 - INFO - * Epoch 180, Train loss: 0.3453, Acc: 0.8816, Val. loss: 0.5696, Acc: 0.8151
+2024-12-11 20:23:03,597 - INFO -   saving best model with acc 0.8151052916024211 at 180 epoch!
+2024-12-11 21:22:28,949 - INFO - * Epoch 181, Train loss: 0.3438, Acc: 0.8804, Val. loss: 0.6089, Acc: 0.8052
+2024-12-11 22:21:56,524 - INFO - * Epoch 182, Train loss: 0.3372, Acc: 0.8847, Val. loss: 0.5991, Acc: 0.8085
+2024-12-11 23:21:24,012 - INFO - * Epoch 183, Train loss: 0.3394, Acc: 0.8838, Val. loss: 0.6096, Acc: 0.8073
+2024-12-12 00:20:47,164 - INFO - * Epoch 184, Train loss: 0.3362, Acc: 0.8836, Val. loss: 0.6040, Acc: 0.8070
+2024-12-12 01:20:12,752 - INFO - * Epoch 185, Train loss: 0.3388, Acc: 0.8839, Val. loss: 0.6297, Acc: 0.8021
+2024-12-12 02:19:41,232 - INFO - * Epoch 186, Train loss: 0.3344, Acc: 0.8849, Val. loss: 0.5988, Acc: 0.8091
+2024-12-12 03:19:09,860 - INFO - * Epoch 187, Train loss: 0.3315, Acc: 0.8864, Val. loss: 0.6317, Acc: 0.8035
+2024-12-12 04:18:39,461 - INFO - * Epoch 188, Train loss: 0.3303, Acc: 0.8862, Val. loss: 0.6426, Acc: 0.7971
+2024-12-12 05:18:06,866 - INFO - * Epoch 189, Train loss: 0.3278, Acc: 0.8877, Val. loss: 0.6209, Acc: 0.8041
+2024-12-12 06:17:33,506 - INFO - * Epoch 190, Train loss: 0.3273, Acc: 0.8875, Val. loss: 0.6337, Acc: 0.8009
+2024-12-12 07:17:06,110 - INFO - * Epoch 191, Train loss: 0.3279, Acc: 0.8874, Val. loss: 0.6164, Acc: 0.8060
+2024-12-12 08:16:35,020 - INFO - * Epoch 192, Train loss: 0.3263, Acc: 0.8878, Val. loss: 0.5970, Acc: 0.8111
+2024-12-12 09:16:08,715 - INFO - * Epoch 193, Train loss: 0.3258, Acc: 0.8873, Val. loss: 0.6008, Acc: 0.8106
+2024-12-12 10:15:38,108 - INFO - * Epoch 194, Train loss: 0.3195, Acc: 0.8896, Val. loss: 0.6005, Acc: 0.8101
+2024-12-12 11:15:02,952 - INFO - * Epoch 195, Train loss: 0.3197, Acc: 0.8902, Val. loss: 0.6034, Acc: 0.8102
+2024-12-12 12:14:33,142 - INFO - * Epoch 196, Train loss: 0.3213, Acc: 0.8894, Val. loss: 0.5934, Acc: 0.8129
+2024-12-12 13:14:02,470 - INFO - * Epoch 197, Train loss: 0.3135, Acc: 0.8924, Val. loss: 0.6244, Acc: 0.8051
+2024-12-12 14:13:30,016 - INFO - * Epoch 198, Train loss: 0.3126, Acc: 0.8918, Val. loss: 0.5883, Acc: 0.8184
+2024-12-12 14:13:30,016 - INFO -   saving best model with acc 0.818372030237581 at 198 epoch!
+2024-12-12 15:12:59,070 - INFO - * Epoch 199, Train loss: 0.3110, Acc: 0.8930, Val. loss: 0.6116, Acc: 0.8120
+2024-12-12 16:12:24,388 - INFO - * Epoch 200, Train loss: 0.3106, Acc: 0.8930, Val. loss: 0.6062, Acc: 0.8113
+2024-12-12 17:11:50,376 - INFO - * Epoch 201, Train loss: 0.3066, Acc: 0.8941, Val. loss: 0.6434, Acc: 0.8016
+2024-12-12 18:11:20,231 - INFO - * Epoch 202, Train loss: 0.3068, Acc: 0.8945, Val. loss: 0.6239, Acc: 0.8041
+2024-12-12 19:10:47,829 - INFO - * Epoch 203, Train loss: 0.3064, Acc: 0.8946, Val. loss: 0.5934, Acc: 0.8093
+2024-12-12 20:10:16,347 - INFO - * Epoch 204, Train loss: 0.3009, Acc: 0.8961, Val. loss: 0.5951, Acc: 0.8134
+2024-12-12 21:09:43,912 - INFO - * Epoch 205, Train loss: 0.3014, Acc: 0.8969, Val. loss: 0.6197, Acc: 0.8032
+2024-12-12 22:09:16,317 - INFO - * Epoch 206, Train loss: 0.2988, Acc: 0.8965, Val. loss: 0.6424, Acc: 0.8047
+2024-12-12 23:08:43,927 - INFO - * Epoch 207, Train loss: 0.2963, Acc: 0.8981, Val. loss: 0.6436, Acc: 0.8107
+2024-12-13 00:08:10,952 - INFO - * Epoch 208, Train loss: 0.2959, Acc: 0.8973, Val. loss: 0.6073, Acc: 0.8128
+2024-12-13 01:07:39,931 - INFO - * Epoch 209, Train loss: 0.2946, Acc: 0.8985, Val. loss: 0.5890, Acc: 0.8160
+2024-12-13 02:07:03,513 - INFO - * Epoch 210, Train loss: 0.2932, Acc: 0.8984, Val. loss: 0.5872, Acc: 0.8145
+2024-12-13 03:06:32,445 - INFO - * Epoch 211, Train loss: 0.2912, Acc: 0.8998, Val. loss: 0.6270, Acc: 0.8066
+2024-12-13 04:06:00,131 - INFO - * Epoch 212, Train loss: 0.2867, Acc: 0.9013, Val. loss: 0.6242, Acc: 0.8090
+2024-12-13 05:05:28,454 - INFO - * Epoch 213, Train loss: 0.2870, Acc: 0.9008, Val. loss: 0.6802, Acc: 0.7899
+2024-12-13 06:04:57,682 - INFO - * Epoch 214, Train loss: 0.2861, Acc: 0.9006, Val. loss: 0.6500, Acc: 0.7978
+2024-12-13 07:04:22,973 - INFO - * Epoch 215, Train loss: 0.2836, Acc: 0.9013, Val. loss: 0.6420, Acc: 0.8057
+2024-12-13 08:03:49,806 - INFO - * Epoch 216, Train loss: 0.2844, Acc: 0.9012, Val. loss: 0.6541, Acc: 0.7892
+2024-12-13 09:03:12,390 - INFO - * Epoch 217, Train loss: 0.2816, Acc: 0.9024, Val. loss: 0.6378, Acc: 0.8030

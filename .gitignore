@@ -1,0 +1,4 @@
+# Ignore all pickle and PyTorch checkpoint files
+*.pkl
+*.pth
+*.pt

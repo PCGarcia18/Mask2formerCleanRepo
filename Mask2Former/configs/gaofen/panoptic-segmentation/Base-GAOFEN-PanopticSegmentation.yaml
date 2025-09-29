@@ -1,0 +1,47 @@
+MODEL:
+  BACKBONE:
+    FREEZE_AT: 0
+    NAME: "build_resnet_backbone"
+  WEIGHTS: "detectron2://ImageNetPretrained/torchvision/R-50.pkl"
+  PIXEL_MEAN: [123.675, 116.280, 103.530]
+  PIXEL_STD: [58.395, 57.120, 57.375]
+  RESNETS:
+    DEPTH: 50 
+    STEM_TYPE: "basic"  # not used
+    STEM_OUT_CHANNELS: 64
+    STRIDE_IN_1X1: False
+    OUT_FEATURES: ["res2", "res3", "res4", "res5"]
+    # NORM: "SyncBN"
+    RES5_MULTI_GRID: [1, 1, 1]  # not used
+DATASETS:
+  TRAIN: ("gaofen_train",)
+  TEST: ("gaofen_test",) 
+SOLVER:
+  IMS_PER_BATCH: 3 # Argüello me comentó que un mayor tamaño de batch puede proporcionar mejores resultados
+  BASE_LR: 0.00001 #0.000001 # Learning rate empleado en el entrenamiento del segmentador de instancias
+  STEPS: (327778, 355092)
+  MAX_ITER: 100000 # This value is for testing # 368750 Value by default
+  WARMUP_FACTOR: 1.0
+  WARMUP_ITERS: 10
+  WEIGHT_DECAY: 0.05
+  OPTIMIZER: "ADAMW"
+  BACKBONE_MULTIPLIER: 0.1
+  CLIP_GRADIENTS:
+    ENABLED: True
+    CLIP_TYPE: "full_model"
+    CLIP_VALUE: 0.01
+    NORM_TYPE: 2.0
+  AMP:
+    ENABLED: True
+INPUT:
+  IMAGE_SIZE: 2048
+  MIN_SCALE: 0.1
+  MAX_SCALE: 2.0
+  FORMAT: "RGB" ## Hay que revisar como se cargan los formatos de las imágenes ya que en algún momento voy a tener que cargar las imágenes hiperespectrales
+  DATASET_MAPPER_NAME: "mask_former_semantic" #zz"COCOPanopticNewBaselineDatasetMapper" "coco_panoptic_lsj" ((("mask_former_panoptic" con este mapper consegui acabar de entrenar en algunas pruebas)))
+TEST: # "mask_former_semantic_GDAL"
+  EVAL_PERIOD: 10000 # 5000 originalmente
+DATALOADER:
+  FILTER_EMPTY_ANNOTATIONS: True
+  NUM_WORKERS: 4 # es util modificarlo para hacer debug 
+VERSION: 2
