@@ -17,16 +17,16 @@ DATASETS:
   TRAIN: ("gaofen_train",)
   TEST: ("gaofen_test",) 
 SOLVER:
-  IMS_PER_BATCH: 5
+  IMS_PER_BATCH: 5 # 8 sin BRA
   BASE_LR: 0.0001 # 0.00001 en la prueba que volvió a dar menos de 40
   STEPS: (327778, 355092)
-  MAX_ITER: 504000 # Siempre 60000, 20k para pruebas 
+  MAX_ITER: 504000 # 315000 para batch de 8 # Siempre 60000, 20k para pruebas 
   WARMUP_FACTOR: 1.0
   WARMUP_ITERS: 10
   WEIGHT_DECAY: 0.05
   OPTIMIZER: "ADAMW"
   BACKBONE_MULTIPLIER: 0.1
-  CHECKPOINT_PERIOD: 504000
+  CHECKPOINT_PERIOD: 504000 # 315000 para batch de 8
   CLIP_GRADIENTS:
     ENABLED: True
     CLIP_TYPE: "full_model"
@@ -46,10 +46,10 @@ INPUT:
   MIN_SIZE_TRAIN:
   - 500
 TEST: 
-  EVAL_PERIOD: 5040 
+  EVAL_PERIOD: 5040 # 3150 para batch de 8 
 DATALOADER:
   FILTER_EMPTY_ANNOTATIONS: True
   NUM_WORKERS: 4 
 VERSION: 2
-OUTPUT_DIR: ./output_FAPN_BRA_RGB
+OUTPUT_DIR: ./outputgaofen3d/output_FAPN_RGB_BATCH_5_2 # output_FAPN_RGB_5
 SEED: 666

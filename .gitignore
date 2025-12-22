@@ -3,3 +3,8 @@
 *.pth
 *.pt
 *.safetensors
+*.sif
+*.out
+
+# Ignore logs folder
+Mask2Former/outputgaofen3d
