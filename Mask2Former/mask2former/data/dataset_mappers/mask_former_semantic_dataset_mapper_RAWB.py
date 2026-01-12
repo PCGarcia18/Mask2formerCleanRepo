@@ -111,7 +111,7 @@ class MaskFormerSemanticDatasetMapperRAWB:
         if(dataset_dict["NIR"]):
             image = utils.read_rawb_NirRGB(dataset_dict["file_name"])
         else:
-            image = utils.read_rawb_RGB(dataset_dict["file_name"])
+            image = utils.read_rawb_RGB(dataset_dict["file_name"],dataset_dict["DATASET_NAME"])
 
 
         utils.check_image_size(dataset_dict, image)

@@ -8,3 +8,4 @@
 
 # Ignore logs folder
 Mask2Former/outputgaofen3d
+Mask2Former/wait.log

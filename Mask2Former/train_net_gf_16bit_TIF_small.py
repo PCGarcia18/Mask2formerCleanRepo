@@ -5,7 +5,7 @@ python train_net_gf_16bit_TIF_small.py --num-gpus 1 --config-file /home/pablo.ca
 This script is a simplified version of the training script in detectron2/tools. Is now adapted to Multispectral data.
 """
 USE_NIR_BAND = False # Set to True if you want to use the NIR band in the multispectral images, else it will train on RGB images
-
+DATASET_NAME = "gaofen"  # Name of the dataset to be used in the MetadataCatalog
 # The images have to be created from the Five Billion Pixels with the jupyter notebook provided in the repository
 
 
@@ -430,6 +430,7 @@ def get_gaofen_dict(images_path, gt_dir_png, gt_dir_tif_color): #Creates de dict
 
         
         record["NIR"] = USE_NIR_BAND 
+        record["DATASET_NAME"] = DATASET_NAME
 
         #End loop and save dict
         dataset_dicts.append(record)

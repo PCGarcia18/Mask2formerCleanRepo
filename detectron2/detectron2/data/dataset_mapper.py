@@ -158,7 +158,7 @@ class DatasetMapper:
         if(dataset_dict["NIR"]):
             image = utils.read_rawb_NirRGB(dataset_dict["file_name"])
         else:
-            image = utils.read_rawb_RGB(dataset_dict["file_name"])
+            image = utils.read_rawb_RGB(dataset_dict["file_name"],dataset_dict["DATASET_NAME"])
         
         #image = utils.read_image(dataset_dict["file_name"], format=self.image_format)
 

@@ -221,10 +221,17 @@ def read_rawb_NirRGB(file_name):
         
     return image
 
-def read_rawb_RGB(file_name):
+def read_rawb_RGB(file_name,version):
     img = read_rawb_NirRGB(file_name)
-    
-    rios = True
+
+    if(version == "gaofen"):
+        return img[:, :, [1,2,3]]  # Delete Nir channel (NIR-R-G-B) -> (R-G-B)
+    elif(version == "rios"):
+        return img[:, :, [2,1,0]]  # Las imagenes de rios vienen en B-G-R-RedEdge-NIR
+    elif(version == "LADOS"):
+        return img[:, :, [0,1,2]]  # Las imagenes de LADOS ya tienen tres bandas, pero asi nos aseguramos de que no haya incompatibilidades al llamar al metodo
+    else: # Throw error
+        raise ValueError("Version not recognized. Use 'gaofen', 'rios' or 'LADOS'.")
 
     if(rios): # Quick fix
         return img[:, :, [2,1,0]]
