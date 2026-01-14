@@ -233,11 +233,6 @@ def read_rawb_RGB(file_name,version):
     else: # Throw error
         raise ValueError("Version not recognized. Use 'gaofen', 'rios' or 'LADOS'.")
 
-    if(rios): # Quick fix
-        return img[:, :, [2,1,0]]
-    else:
-        return img[:, :, [1,2,3]]  # Delete Nir channel (NIR-R-G-B) -> (R-G-B)
-
 
 
 def read_image(file_name, format=None):
