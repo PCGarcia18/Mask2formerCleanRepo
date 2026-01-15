@@ -52,4 +52,3 @@ DATALOADER:
   NUM_WORKERS: 4 
 VERSION: 2
 OUTPUT_DIR: ./outputgaofen3d/output_STD_RGB_prueba_SECRETA_FAPN_2 # output_FAPN_RGB_5
-SEED: 666

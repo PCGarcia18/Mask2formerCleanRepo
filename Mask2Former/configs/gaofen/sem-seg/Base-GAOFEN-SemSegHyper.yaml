@@ -52,4 +52,3 @@ DATALOADER:
   NUM_WORKERS: 4  
 VERSION: 2
 OUTPUT_DIR: ./pruebas_cambio_pixel_decoder_dataset_Francisco
-SEED: 666
