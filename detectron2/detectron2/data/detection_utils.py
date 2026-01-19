@@ -198,16 +198,13 @@ from osgeo import gdal
 import cv2
 def read_rawb_NirRGB(file_name):
     # check if the file has tif or rawb extension
-    if file_name.endswith('.rawb'):
+    if file_name.endswith('.rawb'): 
         with open(file_name, "rb") as f:
             sizes = np.fromfile(f, dtype=np.int32, count=3)
             image_data = np.fromfile(f, dtype=np.int32)
             image = image_data.reshape(sizes)
-            
             image = image.astype(np.float32)
-            # change the order of the bands
-            image = image[:, :, [3,2,1,0]] #(3-2-1-0) -> (NIR-R-G-B), estoy trabajando con las imágenes de 16 bits, si 8 bits se puede comentar la línea
-    elif file_name.endswith('.tif'):# Fix tonto a ver que pasa
+    elif file_name.endswith('.tif'):
         image = gdal.Open(file_name).ReadAsArray()
         image = np.asarray(image, dtype=np.float32)
         # shape to (H, W, C)
@@ -225,13 +222,22 @@ def read_rawb_RGB(file_name,version):
     img = read_rawb_NirRGB(file_name)
 
     if(version == "gaofen"):
-        return img[:, :, [1,2,3]]  # Delete Nir channel (NIR-R-G-B) -> (R-G-B)
+        return img[:, :, [2,1,0]]  # Delete Nir channel (B-G-R-NIR) -> (R-G-B)
     elif(version == "rios"):
         return img[:, :, [2,1,0]]  # Las imagenes de rios vienen en B-G-R-RedEdge-NIR
     elif(version == "LADOS"):
         return img[:, :, [0,1,2]]  # Las imagenes de LADOS ya tienen tres bandas, pero asi nos aseguramos de que no haya incompatibilidades al llamar al metodo
+    elif(version == "LANDCOVERAI"):
+        return img[:, :, [0,1,2]]  # Las imagenes de LANDCOVERAI ya tienen tres bandas, pero asi nos aseguramos de que no haya incompatibilidades al llamar al metodo
     else: # Throw error
-        raise ValueError("Version not recognized. Use 'gaofen', 'rios' or 'LADOS'.")
+        raise ValueError("Version not recognized. Use 'gaofen', 'rios', 'LADOS' or 'LANDCOVERAI'.")
+
+# Datasets I have working at the moment:
+# Gaofen 8bits: NIR-R-G-B
+# Gaofen 16bits: B-G-R-NIR
+# Rios: B-G-R-RedEdge-NIR
+# LADOS: R-G-B
+# LANDCOVERAI: R-G-B
 
 
 
