@@ -222,7 +222,7 @@ def read_rawb_RGB(file_name,version):
     img = read_rawb_NirRGB(file_name)
 
     if(version == "gaofen"):
-        return img[:, :, [2,1,0]]  # Delete Nir channel (B-G-R-NIR) -> (R-G-B)
+        return img[:, :, [2,1,0]]  # Delete Nir channel (B-G-R-NIR) -> (R-G-B) # Esto es específico del de 16 bits
     elif(version == "rios"):
         return img[:, :, [2,1,0]]  # Las imagenes de rios vienen en B-G-R-RedEdge-NIR
     elif(version == "LADOS"):

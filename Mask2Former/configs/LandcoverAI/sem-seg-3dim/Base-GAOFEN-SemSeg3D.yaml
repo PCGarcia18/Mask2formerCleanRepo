@@ -14,19 +14,19 @@ MODEL:
     # NORM: "SyncBN"
     RES5_MULTI_GRID: [1, 1, 1]  # not used
 DATASETS:
-  TRAIN: ("landcoverAI_train",)
+  TRAIN: ("landcoverAI_train",) # 7470 imgenes de entrenamiento
   TEST: ("landcoverAI_test",) 
 SOLVER:
-  IMS_PER_BATCH: 2
+  IMS_PER_BATCH: 8
   BASE_LR: 0.0001 
   STEPS: (327778, 355092)
-  MAX_ITER: 1000 
+  MAX_ITER: 93375 # 100 epocas a 8 imgs/iter con 7470 imgs de entrenamiento
   WARMUP_FACTOR: 1.0
   WARMUP_ITERS: 10
   WEIGHT_DECAY: 0.05
   OPTIMIZER: "ADAMW"
   BACKBONE_MULTIPLIER: 0.1
-  CHECKPOINT_PERIOD: 1000
+  CHECKPOINT_PERIOD: 1000000
   CLIP_GRADIENTS:
     ENABLED: True
     CLIP_TYPE: "full_model"
@@ -40,15 +40,15 @@ INPUT:
   MAX_SCALE: 2.0
   FORMAT: "RGB" 
   DATASET_MAPPER_NAME: "mask_former_semantic_RAWB"
-  MAX_SIZE_TEST: 250 # los patches de LANDCOVERAI son 512*512
-  MAX_SIZE_TRAIN: 250
-  MIN_SIZE_TEST: 200
+  MAX_SIZE_TEST: 512 # los patches de LANDCOVERAI son 512*512
+  MAX_SIZE_TRAIN: 512
+  MIN_SIZE_TEST: 512
   MIN_SIZE_TRAIN:
-  - 200
+  - 512
 TEST: 
-  EVAL_PERIOD: 100
+  EVAL_PERIOD: 9338
 DATALOADER:
   FILTER_EMPTY_ANNOTATIONS: True
   NUM_WORKERS: 4 
 VERSION: 2
-OUTPUT_DIR: ./output_LANDCOVERAI_first_try
+OUTPUT_DIR: ./output_LANDCOVERAI_first_complete_training_fapn_100_epochs

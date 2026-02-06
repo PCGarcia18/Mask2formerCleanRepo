@@ -10,12 +10,12 @@ DATASET_NAME = 'rios'
 
 
 #Train images path, use your own path
-TRAIN_IMAGES_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP/img/' 
-TRAIN_PNG_MASKS_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP/png/'
+TRAIN_IMAGES_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP_BALANCED_REFERENCED_2026/img/' 
+TRAIN_PNG_MASKS_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP_BALANCED_REFERENCED_2026/gt/'
 
 #Test images path, use your own path
-TEST_IMAGES_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP/img_test/' 
-TEST_PNG_MASKS_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP/png_test/'
+TEST_IMAGES_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP_BALANCED_REFERENCED_2026/img_test/' 
+TEST_PNG_MASKS_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP_BALANCED_REFERENCED_2026/gt_test/'
 
 
 try:

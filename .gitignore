@@ -7,5 +7,6 @@
 *.out
 
 # Ignore logs folder
-Mask2Former/outputgaofen3d
 Mask2Former/wait.log
+Mask2Former/output*
+Mask2Former/pruebas_fpn
