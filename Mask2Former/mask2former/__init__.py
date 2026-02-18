@@ -25,6 +25,10 @@ from .data.dataset_mappers.mask_former_semantic_dataset_mapper_RAWB import (
     MaskFormerSemanticDatasetMapperRAWB,
 )
 
+from .data.dataset_mappers.mask_former_semantic_dataset_mapper_augemented import (
+    MaskFormerSemanticDatasetMapperAugmented,
+)
+
 ###########################
 # models
 from .maskformer_model import MaskFormer

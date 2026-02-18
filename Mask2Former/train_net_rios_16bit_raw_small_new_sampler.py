@@ -6,7 +6,7 @@ This script is a simplified version of the training script in detectron2/tools. 
 """
 USE_NIR_BAND = False # Set to True if you want to use the NIR band in the multispectral images, else it will train on RGB images
 DATASET_NAME = 'rios'
-AUGMENTATION = False
+APPLY_SQRT_SMOOTHING_TO_AUGMENTED_DATASET = True
 # The images have to be created from the Five Billion Pixels with the jupyter notebook provided in the repository
 
 
@@ -75,6 +75,9 @@ from mask2former import (
     SemanticSegmentorWithTTA,
     add_maskformer2_config,
 )
+
+from detectron2.data import build_detection_train_loader, get_detection_dataset_dicts
+from detectron2.data.samplers import RepeatFactorTrainingSampler, TrainingSampler
 
 
 class Trainer(DefaultTrainer):
@@ -173,26 +176,71 @@ class Trainer(DefaultTrainer):
             return evaluator_list[0]
         return DatasetEvaluators(evaluator_list)
 
+#################################
+#################################
+# Construir el train loader con los repeat factor
+#################################
+#################################
+
+
     @classmethod
     def build_train_loader(cls, cfg):
-        # Semantic segmentation dataset mapper
-        if cfg.INPUT.DATASET_MAPPER_NAME == "mask_former_semantic":
-            mapper = MaskFormerSemanticDatasetMapper(cfg, True)
-            return build_detection_train_loader(cfg, mapper=mapper)
-        # Semantic mapper for rawb images
-        elif cfg.INPUT.DATASET_MAPPER_NAME == "mask_former_semantic_RAWB":
-            mapper = MaskFormerSemanticDatasetMapperRAWB(cfg, True)
-            return build_detection_train_loader(cfg, mapper=mapper)
-        elif cfg.INPUT.DATASET_MAPPER_NAME == "mask_former_panoptic":
-            mapper = MaskFormerPanopticDatasetMapper(cfg, True)
-            return build_detection_train_loader(cfg, mapper=mapper)
-        # Semantic mapper for rios augmentations images
-        elif cfg.INPUT.DATASET_MAPPER_NAME == "MaskFormerSemanticDatasetMapperAugmented":
-            mapper = MaskFormerSemanticDatasetMapperAugmented(cfg, True)
-            return build_detection_train_loader(cfg, mapper=mapper)
+        if cfg.INPUT.DATASET_MAPPER_NAME == "MaskFormerSemanticDatasetMapperAugmented":
+            mapper = MaskFormerSemanticDatasetMapperAugmented(cfg, is_train=True)
         else:
-            mapper = None
-            return build_detection_train_loader(cfg, mapper=mapper)
+            mapper = MaskFormerSemanticDatasetMapper(cfg, is_train=True)
+
+        dataset_dicts = get_detection_dataset_dicts(
+            cfg.DATASETS.TRAIN,
+            filter_empty=cfg.DATALOADER.FILTER_EMPTY_ANNOTATIONS,
+            proposal_files=cfg.DATASETS.PROPOSAL_FILES_TRAIN if cfg.MODEL.LOAD_PROPOSALS else None,
+        )
+
+        sampler = None
+        if cfg.DATALOADER.SAMPLER_TRAIN == "RepeatFactorTrainingSampler":
+            logger = logging.getLogger(__name__)
+            logger.info("Building RepeatFactorTrainingSampler for Semantic Segmentation...")
+            logger.info(f"Repeat Threshold: {cfg.DATALOADER.REPEAT_THRESHOLD}")
+
+            # Semantic Seg datasets don't have 'annotations' by default. 
+            # We must open the masks to see which classes are inside.
+            
+            logger.info("Scanning mask files to calculate class distribution... (This takes a moment)")
+            
+            from tqdm import tqdm
+            for d in tqdm(dataset_dicts):
+                # If 'annotations' is missing, we calculate it from the mask file
+                if "annotations" not in d:
+                    mask_file = d["sem_seg_file_name"]
+                    
+                    mask = cv2.imread(mask_file, cv2.IMREAD_UNCHANGED)
+                    
+                    if mask is not None:
+                        unique_classes = np.unique(mask)
+                        
+                        # Remove ignore label (e.g. 255)
+                        # Ensure you check against the ignore label in your Config
+                        ignore_val = cfg.MODEL.SEM_SEG_HEAD.IGNORE_VALUE
+                        unique_classes = unique_classes[unique_classes != ignore_val]
+                        
+                        # Create the structure the Sampler expects: [{'category_id': 1}, ...]
+                        d["annotations"] = [{"category_id": int(c)} for c in unique_classes]
+                    else:
+                        d["annotations"] = []
+
+            repeat_factors = RepeatFactorTrainingSampler.repeat_factors_from_category_frequency(
+                dataset_dicts, cfg.DATALOADER.REPEAT_THRESHOLD, sqrt=APPLY_SQRT_SMOOTHING_TO_AUGMENTED_DATASET
+            )
+            
+            # Create the actual sampler
+            sampler = RepeatFactorTrainingSampler(repeat_factors)
+
+        return build_detection_train_loader(
+            cfg, 
+            mapper=mapper, 
+            sampler=sampler,  # Mandar el sampler
+            dataset=dataset_dicts # Mandar el dict con annotations
+        )
 
     @classmethod
     def build_lr_scheduler(cls, cfg, optimizer):
@@ -317,7 +365,6 @@ def setup(args):
     return cfg
 
 # Load GaoFen Dataset
-import pandas as pd
 import cv2
 import numpy as np
 
