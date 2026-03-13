@@ -12,11 +12,13 @@ from .backbone.swin_fusion_convnext import D2SwinTransformerConvNext
 from .backbone.swin_fusion_conv_extractor_to_swin import D2SwinTransformerCNNChannelReduction
 from .backbone.convnext import D2ConvNeXt
 from .backbone.convnext_timm import D2TIMMConvNeXt
+from .backbone.swin_2026_fusion import SwinFusion2026Transformer
 
 from .pixel_decoder.fpn import BasePixelDecoder
 from .pixel_decoder.msdeformattn import MSDeformAttnPixelDecoder
-from .pixel_decoder.FAPNPixelDecoder_old_wrong import FAN
+#from .pixel_decoder.FAPNPixelDecoder_old_wrong import FAN
 from .pixel_decoder.fapn import FaPNPixelDecoder
+from .pixel_decoder.fapn_fusion_2026 import FaPN_Fusion_2026_PixelDecoder
 
 from .meta_arch.mask_former_head import MaskFormerHead
 from .meta_arch.per_pixel_baseline import PerPixelBaselineHead, PerPixelBaselinePlusHead

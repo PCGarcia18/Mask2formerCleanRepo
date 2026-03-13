@@ -1,7 +1,7 @@
 _BASE_: ../maskformer2_R50_bs16_50ep.yaml
 MODEL:
   BACKBONE:
-    NAME: "D2SwinTransformer" # "D2SwinTransformer" and "D2SwinTransformerFusionCNN"
+    NAME: "SwinFusion2026Transformer" # "D2SwinTransformer" and "D2SwinTransformerFusionCNN"
   SWIN:
     EMBED_DIM: 96 # Original 96, si usas 192 no se aprovechan los pesos preentrenados del backbone
     DEPTHS: [2, 2, 6, 2]
@@ -10,6 +10,6 @@ MODEL:
     APE: False
     DROP_PATH_RATE: 0.3
     PATCH_NORM: True
-  WEIGHTS: "./backbone_weights/swin_tiny_patch4_window7_224.pkl"
-  PIXEL_MEAN: [91.488, 96.539, 89.642] # [124.525, 91.488, 96.539, 89.642]
-  PIXEL_STD: [57.424, 55.494, 53.773] # [60.935, 57.424, 55.494, 53.773]
+  WEIGHTS: "./backbone_weights/Swin_Fusion_Weights/swin_tiny_patch4_window7_224_dual.pkl"
+  PIXEL_MEAN: [91.488, 96.539, 89.642, 90, 90,90] # añadí tres valores tontos al final para tratar de cargar los 6 canales, rgb-re-nir-ndvi
+  PIXEL_STD: [57.424, 55.494, 53.773, 55, 55, 55] # [60.935, 57.424, 55.494, 53.773]

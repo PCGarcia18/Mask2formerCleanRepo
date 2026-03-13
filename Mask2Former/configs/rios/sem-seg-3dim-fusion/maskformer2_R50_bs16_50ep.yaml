@@ -5,13 +5,13 @@ MODEL:
     NAME: "MaskFormerHead"
     IN_FEATURES: ["res2", "res3", "res4", "res5"]
     IGNORE_VALUE: 255
-    NUM_CLASSES: 25 # 24 clases + 1 background
+    NUM_CLASSES: 11 # 10 clases + 1 background
     LOSS_WEIGHT: 1.0
     CONVS_DIM: 256
     MASK_DIM: 256
     NORM: "GN"
     # pixel decoder
-    PIXEL_DECODER_NAME: "FaPNPixelDecoder" # "MSDeformAttnPixelDecoder" for the original one, fapn "FaPNPixelDecoder" # Los autores también incluyen "BasePixelDecoder"
+    PIXEL_DECODER_NAME: "FaPN_Fusion_2026_PixelDecoder" # "MSDeformAttnPixelDecoder" for the original one, fapn "FaPNPixelDecoder" # Los autores también incluyen "BasePixelDecoder"
     IN_FEATURES: ["res2", "res3", "res4", "res5"]
     DEFORMABLE_TRANSFORMER_ENCODER_IN_FEATURES: ["res3", "res4", "res5"]
     COMMON_STRIDE: 4

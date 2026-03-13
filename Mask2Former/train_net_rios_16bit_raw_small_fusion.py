@@ -5,19 +5,19 @@ python train_net_gf_16bit_TIF_small.py --num-gpus 1 --config-file /home/pablo.ca
 This script is a simplified version of the training script in detectron2/tools. Is now adapted to Multispectral data.
 """
 USE_NIR_BAND = False # Set to True if you want to use the NIR band in the multispectral images, else it will train on RGB images
-DATASET_NAME = "gaofen"  # Name of the dataset to be used in the MetadataCatalog
-APPLY_SQRT_SMOOTHING_TO_AUGMENTED_DATASET = True
+DATASET_NAME = 'rios_fusion'
+AUGMENTATION = False
 # The images have to be created from the Five Billion Pixels with the jupyter notebook provided in the repository
 
 
-
 #Train images path, use your own path
-TRAIN_IMAGES_PATH = '/home/pablo.canosa/ssd/datasets_pablo/cutGID4BV2/images/training/' 
-TRAIN_PNG_MASKS_PATH = '/home/pablo.canosa/ssd/datasets_pablo/cutGID4BV2/annotations/training/'
+TRAIN_IMAGES_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP_BALANCED_REFERENCED_2026/img/' 
+TRAIN_PNG_MASKS_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP_BALANCED_REFERENCED_2026/gt/'
 
 #Test images path, use your own path
-TEST_IMAGES_PATH = '/home/pablo.canosa/ssd/datasets_pablo/cutGID4BV2/images/validation/' 
-TEST_PNG_MASKS_PATH = '/home/pablo.canosa/ssd/datasets_pablo/cutGID4BV2/annotations/validation/'
+TEST_IMAGES_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP_BALANCED_REFERENCED_2026/img_test/' 
+TEST_PNG_MASKS_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP_BALANCED_REFERENCED_2026/gt_test/'
+
 
 try:
     # ignore ShapelyDeprecationWarning from fvcore
@@ -75,9 +75,6 @@ from mask2former import (
     SemanticSegmentorWithTTA,
     add_maskformer2_config,
 )
-
-from detectron2.data import build_detection_train_loader, get_detection_dataset_dicts
-from detectron2.data.samplers import RepeatFactorTrainingSampler, TrainingSampler
 
 
 class Trainer(DefaultTrainer):
@@ -176,71 +173,27 @@ class Trainer(DefaultTrainer):
             return evaluator_list[0]
         return DatasetEvaluators(evaluator_list)
 
-#################################
-#################################
-# Construir el train loader con los repeat factor
-#################################
-#################################
-
-
     @classmethod
     def build_train_loader(cls, cfg):
-        if cfg.INPUT.DATASET_MAPPER_NAME == "MaskFormerSemanticDatasetMapperAugmented":
-            mapper = MaskFormerSemanticDatasetMapperAugmented(cfg, is_train=True)
+        # Semantic segmentation dataset mapper
+        if cfg.INPUT.DATASET_MAPPER_NAME == "mask_former_semantic":
+            mapper = MaskFormerSemanticDatasetMapper(cfg, True)
+            return build_detection_train_loader(cfg, mapper=mapper)
+        # Semantic mapper for rawb images
+        elif cfg.INPUT.DATASET_MAPPER_NAME == "mask_former_semantic_RAWB":
+            mapper = MaskFormerSemanticDatasetMapperRAWB(cfg, True)
+            return build_detection_train_loader(cfg, mapper=mapper)
+        elif cfg.INPUT.DATASET_MAPPER_NAME == "mask_former_panoptic":
+            mapper = MaskFormerPanopticDatasetMapper(cfg, True)
+            return build_detection_train_loader(cfg, mapper=mapper)
+        # Semantic mapper for rios augmentations images
+        elif cfg.INPUT.DATASET_MAPPER_NAME == "MaskFormerSemanticDatasetMapperAugmented":
+            mapper = MaskFormerSemanticDatasetMapperAugmented(cfg, True)
+            return build_detection_train_loader(cfg, mapper=mapper)
         else:
-            mapper = MaskFormerSemanticDatasetMapper(cfg, is_train=True)
+            mapper = None
+            return build_detection_train_loader(cfg, mapper=mapper)
 
-        dataset_dicts = get_detection_dataset_dicts(
-            cfg.DATASETS.TRAIN,
-            filter_empty=cfg.DATALOADER.FILTER_EMPTY_ANNOTATIONS,
-            proposal_files=cfg.DATASETS.PROPOSAL_FILES_TRAIN if cfg.MODEL.LOAD_PROPOSALS else None,
-        )
-
-        sampler = None
-        if cfg.DATALOADER.SAMPLER_TRAIN == "RepeatFactorTrainingSampler":
-            logger = logging.getLogger(__name__)
-            logger.info("Building RepeatFactorTrainingSampler for Semantic Segmentation...")
-            logger.info(f"Repeat Threshold: {cfg.DATALOADER.REPEAT_THRESHOLD}")
-
-            # Semantic Seg datasets don't have 'annotations' by default. 
-            # We must open the masks to see which classes are inside.
-            
-            logger.info("Scanning mask files to calculate class distribution... (This takes a moment)")
-            
-            from tqdm import tqdm
-            for d in tqdm(dataset_dicts):
-                # If 'annotations' is missing, we calculate it from the mask file
-                if "annotations" not in d:
-                    mask_file = d["sem_seg_file_name"]
-                    
-                    mask = cv2.imread(mask_file, cv2.IMREAD_UNCHANGED)
-                    
-                    if mask is not None:
-                        unique_classes = np.unique(mask)
-                        
-                        # Remove ignore label (e.g. 255)
-                        # Ensure you check against the ignore label in your Config
-                        ignore_val = cfg.MODEL.SEM_SEG_HEAD.IGNORE_VALUE
-                        unique_classes = unique_classes[unique_classes != ignore_val]
-                        
-                        # Create the structure the Sampler expects: [{'category_id': 1}, ...]
-                        d["annotations"] = [{"category_id": int(c)} for c in unique_classes]
-                    else:
-                        d["annotations"] = []
-
-            repeat_factors = RepeatFactorTrainingSampler.repeat_factors_from_category_frequency(
-                dataset_dicts, cfg.DATALOADER.REPEAT_THRESHOLD, sqrt=APPLY_SQRT_SMOOTHING_TO_AUGMENTED_DATASET
-            )
-            
-            # Create the actual sampler
-            sampler = RepeatFactorTrainingSampler(repeat_factors)
-
-        return build_detection_train_loader(
-            cfg, 
-            mapper=mapper, 
-            sampler=sampler,  # Mandar el sampler
-            dataset=dataset_dicts # Mandar el dict con annotations
-        )
     @classmethod
     def build_lr_scheduler(cls, cfg, optimizer):
         """
@@ -364,92 +317,51 @@ def setup(args):
     return cfg
 
 # Load GaoFen Dataset
+import pandas as pd
 import cv2
 import numpy as np
 
 ALL_CLASSES = [
     "unlabeled",
-    "industrial area",
-    "paddy field",
-    "irrigated field",
-    "dry cropland",
-    "garden land",
-    "arbor forest",
-    "shrub forest",
-    "park",
-    "natural meadow",
-    "artificial meadow",
-    "river",
-    "urban residential",
-    "lake",
-    "pond",
-    "fish pond",
-    "snow",
-    "bareland",
-    "rural residential",
-    "stadium",
-    "square",
-    "road",
-    "overpass",
-    "railway station",
-    "airport"
+    "Water",
+    "Bare soil",
+    "Rock",
+    "Asphalt",
+    "Concrete",
+    "Tiles",
+    "Meadows",
+    "Native trees",
+    "Pines",
+    "Eucalyptus"
 ]
 
 COLOR_LIST = [
-    (0, 0, 0),       # unlabeled
-    (200, 0, 0),     # industrial area
-    (0, 200, 0),     # paddy field
-    (150, 250, 0),   # irrigated field
-    (150, 200, 150), # dry cropland
-    (200, 0, 200),   # garden land
-    (150, 0, 250),   # arbor forest
-    (150, 150, 250), # shrub forest
-    (200, 150, 200), # park
-    (250, 200, 0),   # natural meadow
-    (200, 200, 0),   # artificial meadow
-    (0, 0, 200),     # river
-    (250, 0, 150),   # urban residential
-    (0, 150, 200),   # lake
-    (0, 200, 250),   # pond
-    (150, 200, 250), # fish pond
-    (250, 250, 250), # snow
-    (200, 200, 200), # bareland
-    (200, 150, 150), # rural residential
-    (250, 200, 150), # stadium
-    (150, 150, 0),   # square
-    (250, 150, 150), # road
-    (250, 150, 0),   # overpass
-    (250, 200, 250), # railway station
-    (200, 150, 0)    # airport
+    (0, 0, 0),
+    (255, 0, 0),
+    (124, 72, 7),
+    (187, 187, 187),
+    (93, 103, 112),
+    (255, 225, 25),
+    (245, 130, 48),
+    (138, 213, 93),
+    (60, 180, 75),
+    (116, 146, 58),
+    (38, 83, 35)
 
 ]
 
 ID_TO_COLOR_DICT = {
     0: (0, 0, 0),
-    1: (200, 0, 0),
-    2: (0, 200, 0),
-    3: (150, 250, 0),
-    4: (150, 200, 150),
-    5: (200, 0, 200),
-    6: (150, 0, 250),
-    7: (150, 150, 250),
-    8: (200, 150, 200),
-    9: (250, 200, 0),
-    10: (200, 200, 0),
-    11: (0, 0, 200),
-    12: (250, 0, 150),
-    13: (0, 150, 200),
-    14: (0, 200, 250),
-    15: (150, 200, 250),
-    16: (250, 250, 250),
-    17: (200, 200, 200),
-    18: (200, 150, 150),
-    19: (250, 200, 150),
-    20: (150, 150, 0),
-    21: (250, 150, 150),
-    22: (250, 150, 0),
-    23: (250, 200, 250),
-    24: (200, 150, 0)
+    1: (255, 0, 0),
+    2: (124, 72, 7),
+    3: (187, 187, 187),
+    4: (93, 103, 112),
+    5: (255, 225, 25),
+    6: (245, 130, 48),
+    7: (138, 213, 93),
+    8: (60, 180, 75),
+    9: (116, 146, 58),
+    10: (38, 83, 35)
 }
 
 def get_gaofen_dict(images_path, gt_dir_png, gt_dir_tif_color): #Creates de dictionary with the information of the dataset in the Detectron2 format, gt_dir_tif_color is not yet used as is for panoptic segmentation
@@ -466,8 +378,8 @@ def get_gaofen_dict(images_path, gt_dir_png, gt_dir_tif_color): #Creates de dict
 
         image_id, _= os.path.splitext(image_filename) # This splits "imagen_patch_0.tif" into "imagen_patch_0" and ".tif"
 
-        # From the image filename, get the id of the GT "imagen_patchgt_0"
-        mask_id = image_id.replace("imagen_patch", "imagen_patchgt")
+        # From the image filename, get the id of the GT "imagen_patchgt_0" # Ajustar correctamente para que el nombre coincida
+        mask_id = image_id
         gt_mask_grayscale = os.path.join(gt_dir_png, mask_id + ".png")
 
         record["sem_seg_file_name"] = gt_mask_grayscale
@@ -483,7 +395,7 @@ def get_gaofen_dict(images_path, gt_dir_png, gt_dir_tif_color): #Creates de dict
         
         record["NIR"] = USE_NIR_BAND 
         record["DATASET_NAME"] = DATASET_NAME
-        
+
         #End loop and save dict
         dataset_dicts.append(record)
         
@@ -501,20 +413,20 @@ def main(args):
 
 
     ### Register the datasets
-    stuff_dataset_id_to_contiguous_id = {i: i for i in range(25)}#The dictionaries are trivial, the id is the same as the index
+    stuff_dataset_id_to_contiguous_id = {i: i for i in range(11)}#The dictionaries are trivial, the id is the same as the index
     
     # This are the paths for the dataset files in quadrants
     dataset_path_image = TRAIN_IMAGES_PATH
     dataset_path_png_mask = TRAIN_PNG_MASKS_PATH
-    dataset_path_tif_mask = 'small_gaofen/train/tif_color_masks/' # Not used yet, for panoptic segmentation
+    dataset_path_tif_mask = '' # Not used yet, for panoptic segmentation
 
-    DatasetCatalog.register("gaofen_train", lambda : get_gaofen_dict(dataset_path_image,dataset_path_png_mask,dataset_path_tif_mask))
-    MetadataCatalog.get("gaofen_train").stuff_classes = ALL_CLASSES
-    MetadataCatalog.get("gaofen_train").ignore_label = 0
-    MetadataCatalog.get("gaofen_train").thing_dataset_id_to_contiguous_id = stuff_dataset_id_to_contiguous_id
-    MetadataCatalog.get("gaofen_train").stuff_dataset_id_to_contiguous_id = stuff_dataset_id_to_contiguous_id
+    DatasetCatalog.register("rios_train", lambda : get_gaofen_dict(dataset_path_image,dataset_path_png_mask,dataset_path_tif_mask))
+    MetadataCatalog.get("rios_train").stuff_classes = ALL_CLASSES
+    MetadataCatalog.get("rios_train").ignore_label = 0
+    MetadataCatalog.get("rios_train").thing_dataset_id_to_contiguous_id = stuff_dataset_id_to_contiguous_id
+    MetadataCatalog.get("rios_train").stuff_dataset_id_to_contiguous_id = stuff_dataset_id_to_contiguous_id
     
-    MetadataCatalog.get("gaofen_train").stuff_colors = COLOR_LIST
+    MetadataCatalog.get("rios_train").stuff_colors = COLOR_LIST
     
 
 
@@ -522,16 +434,16 @@ def main(args):
     # test trials
     dataset_path_image_test = TEST_IMAGES_PATH
     dataset_path_png_mask_test = TEST_PNG_MASKS_PATH
-    dataset_path_tif_mask_test = 'small_gaofen/test/test_masks_tif/'# Not used yet, for panoptic segmentation
+    dataset_path_tif_mask_test = ''# Not used yet, for panoptic segmentation
 
 
-    DatasetCatalog.register("gaofen_test", lambda : get_gaofen_dict(dataset_path_image_test,dataset_path_png_mask_test,dataset_path_tif_mask_test))
-    MetadataCatalog.get("gaofen_test").stuff_classes = ALL_CLASSES 
-    MetadataCatalog.get("gaofen_test").stuff_dataset_id_to_contiguous_id = stuff_dataset_id_to_contiguous_id
-    MetadataCatalog.get("gaofen_test").stuff_colors = COLOR_LIST
+    DatasetCatalog.register("rios_test", lambda : get_gaofen_dict(dataset_path_image_test,dataset_path_png_mask_test,dataset_path_tif_mask_test))
+    MetadataCatalog.get("rios_test").stuff_classes = ALL_CLASSES 
+    MetadataCatalog.get("rios_test").stuff_dataset_id_to_contiguous_id = stuff_dataset_id_to_contiguous_id
+    MetadataCatalog.get("rios_test").stuff_colors = COLOR_LIST
 
-    MetadataCatalog.get("gaofen_test").ignore_label = 0 
-    MetadataCatalog.get("gaofen_test").evaluator_type = "sem_seg_RAWB"
+    MetadataCatalog.get("rios_test").ignore_label = 0 
+    MetadataCatalog.get("rios_test").evaluator_type = "sem_seg_RAWB"
 
 
     ###

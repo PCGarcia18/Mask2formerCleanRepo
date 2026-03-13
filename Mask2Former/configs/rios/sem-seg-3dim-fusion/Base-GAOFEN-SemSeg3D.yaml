@@ -39,7 +39,7 @@ INPUT:
   MIN_SCALE: 0.1
   MAX_SCALE: 2.0
   FORMAT: "RGB" 
-  DATASET_MAPPER_NAME: "MaskFormerSemanticDatasetMapperAugmented" # mask_former_semantic_RAWB, MaskFormerSemanticDatasetMapperAugmented
+  DATASET_MAPPER_NAME: "mask_former_semantic_RAWB" # mask_former_semantic_RAWB, MaskFormerSemanticDatasetMapperAugmented
   MAX_SIZE_TEST: 600 # Originalmente 1333 y 800 # Para resnet 2000 y 1500 # Para SWIN 1800 y 1400
   MAX_SIZE_TRAIN: 600
   MIN_SIZE_TEST: 500
@@ -50,7 +50,7 @@ TEST:
 DATALOADER:
   FILTER_EMPTY_ANNOTATIONS: True
   NUM_WORKERS: 4 
-  SAMPLER_TRAIN: "RepeatFactorTrainingSampler" # Variable "oculta" mediante a la que se llama al training sampler
-  REPEAT_THRESHOLD: 0.2
+  #SAMPLER_TRAIN: "RepeatFactorTrainingSampler" # Variable "oculta" mediante a la que se llama al training sampler
+  #REPEAT_THRESHOLD: 0.2
 VERSION: 2
-OUTPUT_DIR: ./pruebas_fpn/output_augmentations_02_threshold_Pruebas_GUARDADO
+OUTPUT_DIR: ./pruebas_fusion/FaPN_1

@@ -229,6 +229,14 @@ def read_rawb_RGB(file_name,version):
         return img[:, :, [0,1,2]]  # Las imagenes de LADOS ya tienen tres bandas, pero asi nos aseguramos de que no haya incompatibilidades al llamar al metodo
     elif(version == "LANDCOVERAI"):
         return img[:, :, [0,1,2]]  # Las imagenes de LANDCOVERAI ya tienen tres bandas, pero asi nos aseguramos de que no haya incompatibilidades al llamar al metodo
+    elif(version == "rios_fusion"):
+        # I receive the image in B-G-R-RedEdge-NIR, for testing purposes I want to return RGB-RedEdge-NIR-NDVI, so I will calculate the NDVI and return the image in the format RGB-RedEdge-NIR-NDVI
+        # Calculate NDVI
+        nir = img[:, :, 4]
+        red = img[:, :, 2]
+        ndvi = (nir - red) / (nir + red + 1e-6)
+        # Return RGB-RedEdge-NIR-NDVI
+        return np.concatenate((img[:, :, [2,1,0]], img[:, :, 3:5], ndvi[:, :, np.newaxis]), axis=2)
     else: # Throw error
         raise ValueError("Version not recognized. Use 'gaofen', 'rios', 'LADOS' or 'LANDCOVERAI'.")
 
@@ -238,7 +246,7 @@ def read_rawb_RGB(file_name,version):
 # Rios: B-G-R-RedEdge-NIR
 # LADOS: R-G-B
 # LANDCOVERAI: R-G-B
-
+# rios_fusion: R-G-B-RedEdge-NIR-NDVI 
 
 
 def read_image(file_name, format=None):

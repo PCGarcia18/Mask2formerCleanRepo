@@ -9,4 +9,4 @@
 # Ignore logs folder
 Mask2Former/wait.log
 Mask2Former/output*
-Mask2Former/pruebas_fpn
+Mask2Former/pruebas*
