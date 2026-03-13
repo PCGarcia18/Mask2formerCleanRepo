@@ -53,4 +53,4 @@ DATALOADER:
   SAMPLER_TRAIN: "RepeatFactorTrainingSampler" # Variable "oculta" mediante a la que se llama al training sampler
   REPEAT_THRESHOLD: 0.2
 VERSION: 2
-OUTPUT_DIR: ./pruebas_fpn/output_augmentations_02_threshold_FaPN_SQRT
+OUTPUT_DIR: ./pruebas_fpn/output_augmentations_02_threshold_Pruebas_GUARDADO

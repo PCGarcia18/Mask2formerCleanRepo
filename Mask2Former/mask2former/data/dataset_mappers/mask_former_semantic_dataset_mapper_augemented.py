@@ -13,6 +13,11 @@ from detectron2.data import transforms as T
 from detectron2.projects.point_rend import ColorAugSSDTransform
 from detectron2.structures import BitMasks, Instances
 
+# Para pruebas de visualización
+import os
+import cv2
+from detectron2.utils.visualizer import Visualizer
+
 __all__ = ["MaskFormerSemanticDatasetMapperAugmented"]
 
 
@@ -69,11 +74,9 @@ class MaskFormerSemanticDatasetMapperAugmented:
             )
         ]
         
-        augs.append(T.RandomRotation(angle=[-45, 45], expand=False))
+        augs.append(T.RandomRotation(angle=[-45, 45], expand=False)) # Probar con esto angle=[-180, 180]
         
-        #augs.append(T.RandomShear(x_range=[-0.2, 0.2], y_range=[-0.2, 0.2]))
-
-
+        
 
         if cfg.INPUT.CROP.ENABLED:
             augs.append(
@@ -86,7 +89,14 @@ class MaskFormerSemanticDatasetMapperAugmented:
             )
         if cfg.INPUT.COLOR_AUG_SSD:
             augs.append(ColorAugSSDTransform(img_format=cfg.INPUT.FORMAT))
+
         augs.append(T.RandomFlip())
+        
+        # Transformadas extras no probadas
+        augs.append(T.RandomFlip(prob=0.5, horizontal=False, vertical=True)) #Default es en horizontal, asi que añadimos esta
+
+        
+
 
         # Assume always applies to the training set.
         dataset_names = cfg.DATASETS.TRAIN
@@ -110,16 +120,15 @@ class MaskFormerSemanticDatasetMapperAugmented:
         Returns:
             dict: a format that builtin models in detectron2 accept
         """
-        assert self.is_train, "MaskFormerSemanticDatasetMapper should only be used for training!"
+        assert self.is_train, "MaskFormerSemanticDatasetMapperAugmented should only be used for training!"
 
-        dataset_dict = copy.deepcopy(dataset_dict)  # it will be modified by code below
+        dataset_dict = copy.deepcopy(dataset_dict)
 
         # Read custom images
         if(dataset_dict["NIR"]):
             image = utils.read_rawb_NirRGB(dataset_dict["file_name"])
         else:
-            image = utils.read_rawb_RGB(dataset_dict["file_name"],dataset_dict["DATASET_NAME"])
-
+            image = utils.read_rawb_RGB(dataset_dict["file_name"], dataset_dict["DATASET_NAME"])
 
         utils.check_image_size(dataset_dict, image)
 
@@ -136,10 +145,76 @@ class MaskFormerSemanticDatasetMapperAugmented:
                 )
             )
 
+        # -------------------------------------------------------------------------
+        # Guardar imágenes originales antes de la transformación para comparación visual
+        # -------------------------------------------------------------------------
+        image_original_vis = image.copy()
+        mask_original_vis = sem_seg_gt.copy() if sem_seg_gt is not None else None
+
         aug_input = T.AugInput(image, sem_seg=sem_seg_gt)
         aug_input, transforms = T.apply_transform_gens(self.tfm_gens, aug_input)
         image = aug_input.image
         sem_seg_gt = aug_input.sem_seg
+
+        DEBUG_SAVE_IMAGES = False 
+        OUTPUT_DEBUG_DIR = "./debug_augmentations"
+
+        def convert_for_vis(img_array):
+            """
+            Convierte cualquier imagen (uint16, float, etc.) a uint8 0-255 
+            para poder visualizarla correctamente con OpenCV.
+            """
+            vis = img_array[:, :, :].copy()
+            
+            if vis.max() > 255 or vis.dtype == np.uint16 or vis.dtype == np.float32:
+                vis = cv2.normalize(vis, None, 0, 255, cv2.NORM_MINMAX)
+            
+            vis = vis.astype("uint8")
+            
+            # Detectron carga en RGB (o BGR dependiendo del loader), 
+            # pero OpenCV guarda en BGR. 
+            vis = vis[:, :, ::-1] 
+            
+            return vis
+
+        if DEBUG_SAVE_IMAGES:
+            os.makedirs(OUTPUT_DEBUG_DIR, exist_ok=True)
+            filename_base = os.path.basename(dataset_dict["file_name"]).split('.')[0]
+            
+            vis_img_orig = convert_for_vis(image_original_vis)
+            cv2.imwrite(f"{OUTPUT_DEBUG_DIR}/{filename_base}_orig_img.jpg", vis_img_orig)
+            
+            if mask_original_vis is not None:
+                cv2.imwrite(f"{OUTPUT_DEBUG_DIR}/{filename_base}_orig_mask.png", mask_original_vis.astype("uint8"))
+
+            vis_img_aug = convert_for_vis(image)
+
+            if sem_seg_gt is not None:
+                mask_aug_save = sem_seg_gt.astype("uint8")
+                
+                cv2.imwrite(f"{OUTPUT_DEBUG_DIR}/{filename_base}_aug_mask_vis.png", mask_aug_save)
+                
+
+            # Intentar usar Visualizer de Detectron2
+            try:
+                vis_img_for_detectron = vis_img_aug[:, :, ::-1] # Invertimos canales para Visualizer (BGR->RGB)
+                
+                dataset_name = dataset_dict.get("DATASET_NAME")
+                meta = MetadataCatalog.get(dataset_name) if dataset_name else None
+                
+                v_aug = Visualizer(vis_img_for_detectron, metadata=meta, scale=1.0)
+                
+                if sem_seg_gt is not None:
+                    v_aug = v_aug.draw_sem_seg(sem_seg_gt.astype("int"))
+                    cv2.imwrite(f"{OUTPUT_DEBUG_DIR}/{filename_base}_aug_overlay.jpg", v_aug.get_image()[:, :, ::-1])
+                
+                cv2.imwrite(f"{OUTPUT_DEBUG_DIR}/{filename_base}_aug_img.jpg", vis_img_aug)
+
+            except Exception as e:
+                print(f"Warning visualizando {filename_base}: {e}")
+                cv2.imwrite(f"{OUTPUT_DEBUG_DIR}/{filename_base}_aug_img_raw.jpg", vis_img_aug)
+
+
 
         # Pad image and segmentation label here!
         image = torch.as_tensor(np.ascontiguousarray(image.transpose(2, 0, 1)))
@@ -168,9 +243,6 @@ class MaskFormerSemanticDatasetMapperAugmented:
         if sem_seg_gt is not None:
             dataset_dict["sem_seg"] = sem_seg_gt.long()
 
-        #if "annotations" in dataset_dict:
-        #    raise ValueError("Semantic segmentation dataset should not have 'annotations'.")
-
         # Prepare per-category binary masks
         if sem_seg_gt is not None:
             sem_seg_gt = sem_seg_gt.numpy()
@@ -178,7 +250,7 @@ class MaskFormerSemanticDatasetMapperAugmented:
             classes = np.unique(sem_seg_gt)
             # remove ignored region
             classes = classes[classes != self.ignore_label]
-            classes = classes.flatten() # La anterior línea de código proporcionaba una salida del tipo [[0,1,2]] y para la comparaciónn de las masks se necesita [0,1,2]
+            classes = classes.flatten() 
             instances.gt_classes = torch.tensor(classes, dtype=torch.int64)
 
             masks = []
@@ -186,7 +258,6 @@ class MaskFormerSemanticDatasetMapperAugmented:
                 masks.append(sem_seg_gt == class_id)
 
             if len(masks) == 0:
-                # Some image does not have annotation (all ignored)
                 instances.gt_masks = torch.zeros((0, sem_seg_gt.shape[-2], sem_seg_gt.shape[-1]))
             else:
                 masks = BitMasks(

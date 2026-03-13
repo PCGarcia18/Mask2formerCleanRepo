@@ -9,7 +9,6 @@ DATASET_NAME = 'rios'
 APPLY_SQRT_SMOOTHING_TO_AUGMENTED_DATASET = True
 # The images have to be created from the Five Billion Pixels with the jupyter notebook provided in the repository
 
-
 #Train images path, use your own path
 TRAIN_IMAGES_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP_BALANCED_REFERENCED_2026/img/' 
 TRAIN_PNG_MASKS_PATH = '/home/pablo.canosa/ssd/datasets_pablo/rios_FBP_BALANCED_REFERENCED_2026/gt/'
