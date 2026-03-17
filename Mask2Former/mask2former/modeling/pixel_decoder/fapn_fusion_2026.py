@@ -90,10 +90,6 @@ class FeatureAlign_V2(nn.Module):
         return feat_align + feat_arm
 
 
-# ========================================================================= #
-# NUEVOS MÓDULOS PARA ARQUITECTURA DUAL
-# ========================================================================= #
-
 class SingleBranchFaPN(nn.Module):
     """Encapsula la lógica de un FaPN para poder instanciarlo dos veces."""
     def __init__(self, feature_channels, conv_dim, norm):
@@ -132,36 +128,101 @@ class SingleBranchFaPN(nn.Module):
         return results  # Retorna lista de tensores[res2, res3, res4, res5]
 
 
+# class FeatureFusionModule(nn.Module):
+#     """Módulo para fusionar las salidas de la rama RGB y MSI."""
+#     def __init__(self, conv_dim, norm, num_scales=4):
+#         super().__init__()
+        
+#         # Fusion para las escalas bajas (Transformer Decoder) y alta (Dot product)
+#         self.fusion_blocks = nn.ModuleList()
+#         for i in range(num_scales):
+#             if i == 0:
+#                 # El de mayor resolución (res2) requiere contexto espacial extra (3x3)
+#                 block = nn.Sequential(
+#                     Conv2d(conv_dim * 2, conv_dim, kernel_size=3, padding=1, bias=norm == "", norm=get_norm(norm, conv_dim)),
+#                     nn.ReLU(inplace=True),
+#                     Conv2d(conv_dim, conv_dim, kernel_size=1, bias=norm == "", norm=get_norm(norm, conv_dim))
+#                 )
+#                 weight_init.c2_xavier_fill(block[0])
+#                 weight_init.c2_xavier_fill(block[2])
+#             else:
+#                 # Los multiescala (res3, res4, res5) bajan dimensionalidad con 1x1
+#                 block = Conv2d(conv_dim * 2, conv_dim, kernel_size=1, bias=norm == "", norm=get_norm(norm, conv_dim))
+#                 weight_init.c2_xavier_fill(block)
+                
+#             self.fusion_blocks.append(block)
+
+#     def forward(self, fpn_rgb_list, fpn_msi_list):
+#         fused_list =[]
+#         for i in range(len(fpn_rgb_list)):
+#             concat_feat = torch.cat([fpn_rgb_list[i], fpn_msi_list[i]], dim=1)
+#             fused_list.append(self.fusion_blocks[i](concat_feat))
+#         return fused_list
+
+
+
+class SpatialAttentionFusionBlock(nn.Module):
+    def __init__(self, conv_dim, norm, use_3x3=False):
+        super().__init__()
+        
+        kernel_attn = 3 if use_3x3 else 1
+        pad_attn = 1 if use_3x3 else 0
+        
+        self.attention_generator = nn.Sequential(
+            Conv2d(conv_dim * 2, conv_dim // 2, kernel_size=kernel_attn, padding=pad_attn),
+            nn.ReLU(inplace=True),
+            Conv2d(conv_dim // 2, 2, kernel_size=1), # Salida: 2 canales espaciales
+            nn.Sigmoid() # Fuerza los pesos a estar entre 0 y 1
+        )
+        
+        proj_kernel = 3 if use_3x3 else 1
+        proj_pad = 1 if use_3x3 else 0
+        self.proj = Conv2d(conv_dim * 2, conv_dim, kernel_size=proj_kernel, padding=proj_pad, bias=norm == "", norm=get_norm(norm, conv_dim))
+        
+        weight_init.c2_xavier_fill(self.attention_generator[0])
+        weight_init.c2_xavier_fill(self.attention_generator[2])
+        weight_init.c2_xavier_fill(self.proj)
+
+    def forward(self, rgb, msi):
+        concat_feat = torch.cat([rgb, msi], dim=1)
+        
+        attn_weights = self.attention_generator(concat_feat)
+        
+        weight_rgb = attn_weights[:, 0:1, :, :] # [Batch, 1, H, W]
+        weight_msi = attn_weights[:, 1:2, :, :] #[Batch, 1, H, W]
+        
+        # Multiplicar cada rama por su mapa de atención espacial
+        rgb_attended = rgb * weight_rgb
+        msi_attended = msi * weight_msi
+        
+        fused = torch.cat([rgb_attended, msi_attended], dim=1)
+        out = self.proj(fused)
+        
+        return out
+
+
 class FeatureFusionModule(nn.Module):
-    """Módulo para fusionar las salidas de la rama RGB y MSI."""
+    """Módulo de Fusión Dinámica con Atención Espacial."""
     def __init__(self, conv_dim, norm, num_scales=4):
         super().__init__()
         
-        # Fusion para las escalas bajas (Transformer Decoder) y alta (Dot product)
         self.fusion_blocks = nn.ModuleList()
         for i in range(num_scales):
             if i == 0:
-                # El de mayor resolución (res2) requiere contexto espacial extra (3x3)
-                block = nn.Sequential(
-                    Conv2d(conv_dim * 2, conv_dim, kernel_size=3, padding=1, bias=norm == "", norm=get_norm(norm, conv_dim)),
-                    nn.ReLU(inplace=True),
-                    Conv2d(conv_dim, conv_dim, kernel_size=1, bias=norm == "", norm=get_norm(norm, conv_dim))
-                )
-                weight_init.c2_xavier_fill(block[0])
-                weight_init.c2_xavier_fill(block[2])
+                block = SpatialAttentionFusionBlock(conv_dim, norm, use_3x3=True)
             else:
-                # Los multiescala (res3, res4, res5) bajan dimensionalidad con 1x1
-                block = Conv2d(conv_dim * 2, conv_dim, kernel_size=1, bias=norm == "", norm=get_norm(norm, conv_dim))
-                weight_init.c2_xavier_fill(block)
+                block = SpatialAttentionFusionBlock(conv_dim, norm, use_3x3=False)
                 
             self.fusion_blocks.append(block)
 
     def forward(self, fpn_rgb_list, fpn_msi_list):
         fused_list =[]
         for i in range(len(fpn_rgb_list)):
-            concat_feat = torch.cat([fpn_rgb_list[i], fpn_msi_list[i]], dim=1)
-            fused_list.append(self.fusion_blocks[i](concat_feat))
+            fused_feat = self.fusion_blocks[i](fpn_rgb_list[i], fpn_msi_list[i])
+            fused_list.append(fused_feat)
         return fused_list
+
+
 
 
 @SEM_SEG_HEADS_REGISTRY.register()
@@ -185,10 +246,8 @@ class FaPN_Fusion_2026_PixelDecoder(nn.Module):
         self.fapn_rgb = SingleBranchFaPN(feature_channels, conv_dim, norm)
         self.fapn_msi = SingleBranchFaPN(feature_channels, conv_dim, norm)
         
-        # Instanciamos el módulo de fusión
         self.fusion_module = FeatureFusionModule(conv_dim, norm, num_scales=len(self.base_in_features))
         
-        # Proyección final para las máscaras (sobre la resolución 1/4 fusionada)
         self.mask_features_head = nn.Sequential(
             Conv2d(conv_dim, mask_dim, kernel_size=3, stride=1, padding=1, bias=norm == "", norm=get_norm(norm, mask_dim)),
             nn.ReLU(inplace=True)
@@ -201,19 +260,14 @@ class FaPN_Fusion_2026_PixelDecoder(nn.Module):
         Args:
             features (dict[str->Tensor]): Contiene 'res2_rgb', 'res2_msi', etc.
         """
-        # Extraemos las listas de features para cada rama
         x_rgb = [features[f"{f}_rgb"] for f in self.base_in_features]
         x_msi = [features[f"{f}_msi"] for f in self.base_in_features]
         
-        # 1. Pasamos por los FaPN paralelos
         fpn_rgb_out = self.fapn_rgb(x_rgb)
         fpn_msi_out = self.fapn_msi(x_msi)
         
-        # 2. Fusionamos capa por capa (Late Fusion)
         fused_features = self.fusion_module(fpn_rgb_out, fpn_msi_out)
         
-        # 3. Preparamos las salidas exactas que espera Mask2Former
-        # El feature 0 (res2) es el de mayor resolución (stride 4) usado para el dot product final
         mask_features = self.mask_features_head(fused_features[0])
         
         # Los features restantes (stride 8, 16, 32) alimentan al Transformer Decoder
