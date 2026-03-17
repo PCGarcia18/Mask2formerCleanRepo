@@ -222,7 +222,7 @@ def read_rawb_RGB(file_name,version):
     img = read_rawb_NirRGB(file_name)
 
     if(version == "gaofen"):
-        return img[:, :, [2,1,0]]  # Delete Nir channel (B-G-R-NIR) -> (R-G-B) # Esto es específico del de 16 bits
+        return img[:, :, [2,1,0]]  # Delete Nir channel (B-G-R-NIR) -> (R-G-B)
     elif(version == "rios"):
         return img[:, :, [2,1,0]]  # Las imagenes de rios vienen en B-G-R-RedEdge-NIR
     elif(version == "LADOS"):
@@ -237,6 +237,24 @@ def read_rawb_RGB(file_name,version):
         ndvi = (nir - red) / (nir + red + 1e-6)
         # Return RGB-RedEdge-NIR-NDVI
         return np.concatenate((img[:, :, [2,1,0]], img[:, :, 3:5], ndvi[:, :, np.newaxis]), axis=2)
+    elif(version == "gaofen_fusion"):
+        # I receive the image in B-G-R-NIR
+        green = img[:, :, 1]
+        red = img[:, :, 2]
+        nir = img[:, :, 3] 
+
+        ndvi = (nir - red) / (nir + red + 1e-6)
+
+        ndwi = (green - nir) / (green + nir + 1e-6)
+
+        rgb_bands = img[:, :, [2, 1, 0]]  # BGR a RGB
+
+        nir_expanded = nir[:, :, np.newaxis]
+        ndvi_expanded = ndvi[:, :, np.newaxis]
+        ndwi_expanded = ndwi[:, :, np.newaxis]
+
+        return np.concatenate((rgb_bands, nir_expanded, ndvi_expanded, ndwi_expanded), axis=2)
+
     else: # Throw error
         raise ValueError("Version not recognized. Use 'gaofen', 'rios', 'LADOS' or 'LANDCOVERAI'.")
 
@@ -247,6 +265,7 @@ def read_rawb_RGB(file_name,version):
 # LADOS: R-G-B
 # LANDCOVERAI: R-G-B
 # rios_fusion: R-G-B-RedEdge-NIR-NDVI 
+# gaofen_fusion: R-G-B-NIR-NDVI-NDWI
 
 
 def read_image(file_name, format=None):
