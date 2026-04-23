@@ -192,6 +192,19 @@ class SpatialAttentionFusionBlock(nn.Module):
         weight_msi = attn_weights[:, 1:2, :, :] #[Batch, 1, H, W]
         
         # Multiplicar cada rama por su mapa de atención espacial
+        w = weight_msi[0, 0]
+        total = w.numel()
+        high  = (w > 0.7).sum().item() / total * 100
+        mid   = ((w > 0.3) & (w <= 0.7)).sum().item() / total * 100
+        low   = (w <= 0.3).sum().item() / total * 100
+        print(f"  [{w.shape[0]}x{w.shape[1]}] "
+            f"MSI high(>0.7): {high:.1f}%  "
+            f"mid(0.3-0.7): {mid:.1f}%  "
+            f"low(<0.3): {low:.1f}%  "
+            f"(mean RGB={weight_rgb[0,0].mean().item():.3f} "
+            f"MSI={w.mean().item():.3f})")
+
+
         rgb_attended = rgb * weight_rgb
         msi_attended = msi * weight_msi
         

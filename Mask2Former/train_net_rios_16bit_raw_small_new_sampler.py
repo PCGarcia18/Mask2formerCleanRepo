@@ -5,7 +5,7 @@ python train_net_gf_16bit_TIF_small.py --num-gpus 1 --config-file /home/pablo.ca
 This script is a simplified version of the training script in detectron2/tools. Is now adapted to Multispectral data.
 """
 USE_NIR_BAND = False # Set to True if you want to use the NIR band in the multispectral images, else it will train on RGB images
-DATASET_NAME = 'rios'
+DATASET_NAME = 'rios_red_init' # "rios_red_init"
 APPLY_SQRT_SMOOTHING_TO_AUGMENTED_DATASET = True
 # The images have to be created from the Five Billion Pixels with the jupyter notebook provided in the repository
 

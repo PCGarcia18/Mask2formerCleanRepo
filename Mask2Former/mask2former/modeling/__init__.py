@@ -13,6 +13,7 @@ from .backbone.swin_fusion_conv_extractor_to_swin import D2SwinTransformerCNNCha
 from .backbone.convnext import D2ConvNeXt
 from .backbone.convnext_timm import D2TIMMConvNeXt
 from .backbone.swin_2026_fusion import SwinFusion2026Transformer
+from .backbone.swin_convnext_2026_fusion import SwinConvnextFusion2026Transformer
 
 from .pixel_decoder.fpn import BasePixelDecoder
 from .pixel_decoder.msdeformattn import MSDeformAttnPixelDecoder

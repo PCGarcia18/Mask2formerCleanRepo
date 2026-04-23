@@ -53,4 +53,4 @@ DATALOADER:
   #SAMPLER_TRAIN: "RepeatFactorTrainingSampler" # Variable "oculta" mediante a la que se llama al training sampler
   #REPEAT_THRESHOLD: 0.2
 VERSION: 2
-OUTPUT_DIR: ./pruebas_fusion_FBP/FaPN_1
+OUTPUT_DIR: ./pruebas_fusion/FaPN_CONVNEXT_pesos_loss_nueva

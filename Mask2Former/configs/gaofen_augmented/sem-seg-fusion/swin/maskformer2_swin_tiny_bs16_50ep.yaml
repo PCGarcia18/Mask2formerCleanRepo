@@ -1,7 +1,7 @@
 _BASE_: ../maskformer2_R50_bs16_50ep.yaml
 MODEL:
   BACKBONE:
-    NAME: "SwinFusion2026Transformer" # "D2SwinTransformer" and "D2SwinTransformerFusionCNN"
+    NAME: "SwinConvnextFusion2026Transformer" # "SwinFusion2026Transformer" and "SwinConvnextFusion2026Transformer"
   SWIN:
     EMBED_DIM: 96 # Original 96, si usas 192 no se aprovechan los pesos preentrenados del backbone
     DEPTHS: [2, 2, 6, 2]
@@ -10,6 +10,6 @@ MODEL:
     APE: False
     DROP_PATH_RATE: 0.3
     PATCH_NORM: True
-  WEIGHTS: "./backbone_weights/Swin_Fusion_Weights/swin_tiny_patch4_window7_224_dual.pkl"
-  PIXEL_MEAN: [15437.1009, 19975.0315, 25899.0513, 18878.2456, 0.0636, 0.0641] # [124.525, 91.488, 96.539, 89.642]
-  PIXEL_STD: [7072.6716, 7156.3341, 8901.7321, 9996.7636, 0.26, 0.2399] # [60.935, 57.424, 55.494, 53.773]
+  WEIGHTS: "./backbone_weights/swin_tiny_patch4_window7_224.pkl" #"./backbone_weights/Swin_Fusion_Weights/swin_tiny_patch4_window7_224_dual.pkl"
+  PIXEL_MEAN: [15437.1009, 19975.0315, 25899.0513, 18878.2456, 0.0636, 0.0641]
+  PIXEL_STD: [7072.6716, 7156.3341, 8901.7321, 9996.7636, 0.26, 0.2399] 

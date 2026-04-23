@@ -20,7 +20,7 @@ SOLVER:
   IMS_PER_BATCH: 5
   BASE_LR: 0.0001 # 0.00001 en la prueba que volvió a dar menos de 40
   STEPS: (327778, 355092)
-  MAX_ITER: 24512 # para batch de 6 son 20500
+  MAX_ITER: 24520 # para batch de 6 son 20500
   WARMUP_FACTOR: 1.0
   WARMUP_ITERS: 10
   WEIGHT_DECAY: 0.05
@@ -39,7 +39,7 @@ INPUT:
   MIN_SCALE: 0.1
   MAX_SCALE: 2.0
   FORMAT: "RGB" 
-  DATASET_MAPPER_NAME: "mask_former_semantic_RAWB" # mask_former_semantic_RAWB, MaskFormerSemanticDatasetMapperAugmented
+  DATASET_MAPPER_NAME: "MaskFormerSemanticDatasetMapperAugmented" # mask_former_semantic_RAWB, MaskFormerSemanticDatasetMapperAugmented
   MAX_SIZE_TEST: 600 # Originalmente 1333 y 800 # Para resnet 2000 y 1500 # Para SWIN 1800 y 1400
   MAX_SIZE_TRAIN: 600
   MIN_SIZE_TEST: 500
@@ -50,7 +50,7 @@ TEST:
 DATALOADER:
   FILTER_EMPTY_ANNOTATIONS: True
   NUM_WORKERS: 4 
-  #SAMPLER_TRAIN: "RepeatFactorTrainingSampler" # Variable "oculta" mediante a la que se llama al training sampler
-  #REPEAT_THRESHOLD: 0.2
+  SAMPLER_TRAIN: "RepeatFactorTrainingSampler" # Variable "oculta" mediante a la que se llama al training sampler, si se comenta se pone bien
+  REPEAT_THRESHOLD: 0.25
 VERSION: 2
-OUTPUT_DIR: ./pruebas_fusion/rios_locos_fusion_1
+OUTPUT_DIR: ./pruebas_swin_weight_initialization_RGB_R_R/rios_1_augmented

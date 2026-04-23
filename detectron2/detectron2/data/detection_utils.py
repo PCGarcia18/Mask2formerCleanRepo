@@ -237,6 +237,13 @@ def read_rawb_RGB(file_name,version):
         ndvi = (nir - red) / (nir + red + 1e-6)
         # Return RGB-RedEdge-NIR-NDVI
         return np.concatenate((img[:, :, [2,1,0]], img[:, :, 3:5], ndvi[:, :, np.newaxis]), axis=2)
+    elif(version == "rios_red_init"):
+        # I receive the image in B-G-R-RedEdge-NIR, for testing purposes I want to return RGB-RedEdge-NIR-NDVI, so I will calculate the NDVI and return the image in the format RGB-RedEdge-NIR-NDVI
+        # Calculate NDVI
+        nir = img[:, :, 4]
+        red = img[:, :, 2]
+        # Return RGB-RedEdge-NIR
+        return np.concatenate((img[:, :, [2,1,0]], img[:, :, 3:5]), axis=2)
     elif(version == "gaofen_fusion"):
         # I receive the image in B-G-R-NIR
         green = img[:, :, 1]
@@ -265,6 +272,7 @@ def read_rawb_RGB(file_name,version):
 # LADOS: R-G-B
 # LANDCOVERAI: R-G-B
 # rios_fusion: R-G-B-RedEdge-NIR-NDVI 
+# rios_red_init: R-G-B-RedEdge-NIR
 # gaofen_fusion: R-G-B-NIR-NDVI-NDWI
 
 
