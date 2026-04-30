@@ -362,7 +362,7 @@ class MultiScaleMaskedTransformerDecoder(nn.Module):
 
     def forward(self, x, mask_features, mask = None):
         # x is a list of multi-scale feature
-        print("ORIGINAL MASK2FORMER TRANSFORMER DECODER")
+        #print("ORIGINAL MASK2FORMER TRANSFORMER DECODER")
         assert len(x) == self.num_feature_levels
         src = []
         pos = []
